@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CareerRadar - India's Mid-Career Job Risk Diagnostic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#1a1a18;--ink2:#4a4a47;--ink3:#8a8a85;--ink4:#c8c8c0;
+  --bg:#faf9f6;--card:#fff;--bdr:#e4e3dc;
+  --g:#1a3a2a;--g2:#2d6348;--g3:#e8f2ec;
+  --r:#8b2020;--rb:#fdf0f0;--a:#7a5c00;--ab:#fdf8e8;--t:#1a4a1a;--tb:#edf7ed;
+  --blue:#17446b;--blue-bg:#eef5fb;
+}
+body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;line-height:1.6}
+.nav{display:flex;background:var(--card);border-bottom:1px solid var(--bdr);padding:0 1.5rem;position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.nb{padding:.85rem 1.25rem;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border:none;background:transparent;color:var(--ink3);cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-1px;transition:all .15s;font-family:inherit}
+.nb.on{color:var(--g);border-bottom-color:var(--g)}
+.nb:hover:not(.on){color:var(--ink2)}
+.ntag{margin-left:auto;padding:.85rem 1rem;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink4);display:flex;align-items:center;user-select:none;cursor:default}
+.sc{display:none}.sc.on{display:block}
+.wrap{max-width:700px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
+.fhd{margin-bottom:2rem;padding-bottom:1.75rem;border-bottom:1px solid var(--bdr)}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--g2);margin-bottom:.6rem}
+.fhd h1{font-family:"Instrument Serif",serif;font-size:2.1rem;font-weight:400;line-height:1.2;margin-bottom:.75rem}
+.fhd h1 em{font-style:italic;color:var(--g2)}
+.fhd p{font-size:14px;color:var(--ink2);max-width:560px;line-height:1.65}
+.prog-wrap{margin-bottom:1.5rem}
+.prog-meta{display:flex;justify-content:space-between;font-size:11px;color:var(--ink3);margin-bottom:5px}
+.prog-track{height:3px;background:var(--bdr);border-radius:2px;overflow:hidden}
+.prog-fill{height:100%;background:var(--g2);border-radius:2px;transition:width .3s ease;width:0%}
+.pbox{background:var(--card);border:1px solid var(--bdr);border-radius:12px;padding:1.75rem;margin-bottom:1.75rem}
+.blabel{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:1.1rem}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.fg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-bottom:1rem}
+.fg1{display:grid;grid-template-columns:1fr;margin-bottom:0}
+.fl{display:flex;flex-direction:column;gap:5px}
+.fl label{font-size:11px;font-weight:600;color:var(--ink2)}
+.fl input,.fl select,.fl textarea{font-family:"DM Sans",sans-serif;font-size:14px;padding:10px 12px;border:1px solid var(--bdr);border-radius:8px;background:var(--bg);color:var(--ink);outline:none;transition:border-color .15s;width:100%}
+.fl input:focus,.fl select:focus,.fl textarea:focus{border-color:var(--g2);background:#fff}
+.fl textarea{resize:vertical;min-height:68px}
+.hint{font-size:11px;color:var(--ink3);margin-top:3px;display:none}
+.msig{font-size:11px;font-weight:700;padding:5px 10px;border-radius:6px;margin-top:5px;display:none}
+.subfunc-wrap{margin-bottom:1rem;display:none}
+.field-error{border-color:var(--r)!important;background:var(--rb)!important}
+.qsec{margin-bottom:1.75rem}
+.qsec-hd{display:flex;align-items:center;gap:10px;margin-bottom:1rem}
+.qsec-n{width:26px;height:26px;border-radius:50%;background:var(--g);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.qsec-hd h3{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2)}
+.qcard{background:var(--card);border:1px solid var(--bdr);border-radius:10px;padding:1.1rem 1.4rem;margin-bottom:.6rem;transition:border-color .15s}
+.qcard:focus-within{border-color:var(--g2)}
+.qn{font-size:10px;font-weight:700;letter-spacing:.04em;color:var(--ink4);margin-bottom:.3rem}
+.rflag{display:inline-block;font-size:9px;font-weight:700;padding:1px 6px;border-radius:3px;margin-left:6px;background:var(--rb);color:var(--r)}
+.qt{font-size:14px;color:var(--ink);margin-bottom:.8rem;line-height:1.45}
+.slbl{display:flex;justify-content:space-between;font-size:10px;color:var(--ink3);margin-bottom:5px}
+.srow{display:flex;gap:7px}
+.srow input[type=radio]{display:none}
+.srow input[type=radio]+label{width:40px;height:40px;border-radius:8px;border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:500;color:var(--ink2);cursor:pointer;transition:all .12s;flex-shrink:0;user-select:none;-webkit-tap-highlight-color:transparent}
+.srow input[type=radio]+label:hover{border-color:var(--g2);background:var(--g3);color:var(--g)}
+.srow input[type=radio]:checked+label{background:var(--g);border-color:var(--g);color:#fff;font-weight:700}
+.subrow{margin-top:2rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.btn-main{font-family:"DM Sans",sans-serif;font-size:14px;font-weight:700;padding:13px 28px;background:var(--g);color:#fff;border:none;border-radius:8px;cursor:pointer;transition:background .2s}
+.btn-main:hover{background:var(--g2)}
+.snote{font-size:13px;color:var(--ink3)}
+.errmsg{color:var(--r);font-size:13px;padding:10px 14px;background:var(--rb);border-radius:8px;display:none;margin-top:1rem}
+.badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:12px}
+.b-ok{background:var(--g3);color:var(--g)}.b-med{background:var(--ab);color:var(--a)}
+.b-low{background:var(--tb);color:var(--t)}.b-high{background:var(--rb);color:var(--r)}
+/* PREVIEW */
+.prev-wrap{max-width:640px;margin:0 auto;padding:2rem 1.5rem 4rem}
+.prev-card{background:var(--card);border:1px solid var(--bdr);border-radius:12px;overflow:hidden;margin-bottom:1.25rem}
+.prev-top{background:var(--g);color:#fff;padding:1.25rem 1.75rem}
+.prev-top .pe{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.6;margin-bottom:.35rem}
+.prev-top h2{font-size:1.1rem;font-weight:600}
+.prev-body{padding:1.5rem 1.75rem}
+.prev-sec{margin-bottom:1.4rem;padding-bottom:1.4rem;border-bottom:1px solid var(--bdr)}
+.prev-sec:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
+.plabel{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:.5rem}
+.truth-box{background:#1a3a2a08;border-left:3px solid var(--g2);border-radius:0 8px 8px 0;padding:.9rem 1.1rem}
+.truth-box p{font-size:14px;color:var(--ink);line-height:1.65;font-style:italic}
+.bullets{display:flex;flex-direction:column;gap:.5rem}
+.bullets div{display:flex;gap:9px;align-items:flex-start}
+.bullets .arr{color:var(--g2);font-weight:700;flex-shrink:0;margin-top:1px}
+.bullets .txt{font-size:13px;color:var(--ink2);line-height:1.5}
+.prev-cta{background:var(--bg);border-top:1px solid var(--bdr);padding:1.25rem 1.75rem}
+.prev-cta p{font-size:13px;color:var(--ink2);line-height:1.55;margin-bottom:1rem}
+.cta-row{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.btn-cta{font-family:"DM Sans",sans-serif;font-size:14px;font-weight:700;padding:13px 26px;background:var(--g);color:#fff;border:none;border-radius:8px;cursor:pointer;text-decoration:none;display:inline-block;transition:background .2s}
+.btn-cta:hover{background:var(--g2)}
+.cta-note{font-size:12px;color:var(--ink3)}
+.save-btn{font-family:"DM Sans",sans-serif;font-size:12px;font-weight:600;padding:7px 16px;background:transparent;border:1px solid var(--bdr);border-radius:7px;cursor:pointer;color:var(--ink3);margin-top:.75rem}
+.next-steps{background:var(--card);border:1px solid var(--bdr);border-radius:10px;padding:1.4rem 1.75rem;margin-bottom:1.25rem}
+.next-steps h3{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:.85rem}
+.step-row{display:flex;gap:12px;align-items:flex-start;margin-bottom:.75rem}
+.step-row:last-child{margin-bottom:0}
+.step-n{width:24px;height:24px;border-radius:50%;background:var(--g3);color:var(--g);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.step-t{font-size:13px;color:var(--ink2);line-height:1.5}
+.step-t strong{color:var(--ink);font-weight:600}
+/* ADMIN */
+.adm-wrap{max-width:900px;margin:0 auto;padding:2rem 1.5rem 5rem}
+.adm-hd{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.75rem;padding-bottom:1.5rem;border-bottom:1px solid var(--bdr);gap:1rem;flex-wrap:wrap}
+.adm-hd h2{font-family:"Instrument Serif",serif;font-size:1.6rem;font-weight:400}
+.adm-sub{font-size:12px;color:var(--ink3);margin-top:3px}
+.btn-sec{font-family:"DM Sans",sans-serif;font-size:12px;font-weight:600;padding:8px 14px;background:var(--card);border:1px solid var(--bdr);border-radius:7px;cursor:pointer;color:var(--ink2);transition:all .15s;white-space:nowrap}
+.btn-sec:hover{background:var(--g3);border-color:var(--g2);color:var(--g)}
+.btn-pri{background:var(--g);color:#fff;border-color:var(--g)}
+.btn-pri:hover{background:var(--g2);color:#fff}
+.pp{background:var(--card);border:1px solid var(--bdr);border-radius:10px;margin-bottom:1.25rem;overflow:hidden}
+.pp-hd{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;border-bottom:1px solid var(--bdr)}
+.pp-hd h3{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2)}
+.pp-list{display:flex;flex-direction:column}
+.pr{display:flex;align-items:center;gap:12px;padding:.85rem 1.25rem;border-bottom:1px solid var(--bdr);cursor:pointer;transition:background .12s}
+.pr:last-child{border-bottom:none}
+.pr:hover,.pr.active{background:var(--g3)}
+.pr-av{width:34px;height:34px;border-radius:50%;background:var(--g);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pr-info{flex:1;min-width:0}
+.pr-name{font-size:13px;font-weight:600;color:var(--ink)}
+.pr-meta{font-size:11px;color:var(--ink3);margin-top:1px}
+.pr-score{text-align:right;flex-shrink:0}
+.pr-score .sc{font-size:16px;font-weight:700;color:var(--g);font-family:"Instrument Serif",serif}
+.pr-score .sc-sub{font-size:10px;color:var(--ink3)}
+.pp-empty{padding:2rem;text-align:center;color:var(--ink3);font-size:13px}
+.rg{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.rc{background:var(--card);border:1px solid var(--bdr);border-radius:10px;padding:1.1rem 1.25rem}
+.rc.full{grid-column:1/-1}
+.rlbl{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin-bottom:.5rem}
+.rval{font-size:18px;font-weight:700;color:var(--ink);line-height:1.2}
+.score-big{font-family:"Instrument Serif",serif;font-size:3.2rem;font-weight:400;color:var(--g);line-height:1}
+.dbars{display:flex;flex-direction:column;gap:8px}
+.drow{display:flex;align-items:center;gap:9px}
+.dnm{font-size:11px;font-weight:500;color:var(--ink2);width:175px;flex-shrink:0}
+.dbw{flex:1;height:7px;background:var(--bdr);border-radius:4px;overflow:hidden}
+.dbf{height:100%;border-radius:4px;background:var(--g2);transition:width .5s ease}
+.dbf.risk{background:var(--r)}
+.dsc{font-size:11px;font-weight:700;color:var(--ink);width:30px;text-align:right;flex-shrink:0}
+.atbl{width:100%;border-collapse:collapse;font-size:12px}
+.atbl th{text-align:left;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);padding:7px 8px;border-bottom:1px solid var(--bdr)}
+.atbl td{padding:7px 8px;border-bottom:1px solid var(--bdr);color:var(--ink2);vertical-align:top}
+.atbl tr:last-child td{border-bottom:none}
+.atbl td:first-child{color:var(--ink4);font-size:10px;font-weight:700;width:32px}
+.atbl td:nth-child(2){color:var(--ink)}
+.sp{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;font-size:11px;font-weight:700}
+.sp1,.sp2{background:var(--rb);color:var(--r)}.sp3{background:var(--ab);color:var(--a)}.sp4,.sp5{background:var(--tb);color:var(--t)}
+.spr1,.spr2{background:var(--tb);color:var(--t)}.spr3{background:var(--ab);color:var(--a)}.spr4,.spr5{background:var(--rb);color:var(--r)}
+/* REVEAL / SNAP */
+.rev-wrap{max-width:700px;margin:0 auto;padding:2rem 1.5rem 5rem}
+.rev-hd{margin-bottom:1.5rem}
+.rev-hd h2{font-family:"Instrument Serif",serif;font-size:1.6rem;font-weight:400;margin-bottom:.4rem}
+.rev-hd p{font-size:13px;color:var(--ink2)}
+.paste-box{background:var(--card);border:1px solid var(--bdr);border-radius:10px;padding:1.4rem;margin-bottom:1rem}
+.paste-box label{display:block;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:.65rem}
+.paste-box textarea{font-family:monospace;font-size:12px;width:100%;min-height:90px;padding:10px;border:1px solid var(--bdr);border-radius:8px;background:var(--bg);color:var(--ink);outline:none;resize:vertical}
+.paste-box textarea:focus{border-color:var(--g2)}
+.snap-doc{display:none;background:var(--card);border:1px solid var(--bdr);border-radius:12px;overflow:hidden;margin-top:1.25rem}
+.snap-doc.on{display:block}
+.snap-top{background:var(--g);color:#fff;padding:1.4rem 1.75rem}
+.snap-top .se{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;opacity:.6;margin-bottom:.4rem}
+.snap-top h2{font-family:"Instrument Serif",serif;font-size:1.5rem;font-weight:400}
+.snap-top .sm{font-size:11px;opacity:.6;margin-top:3px}
+.snap-body{padding:1.75rem}
+.snap-srow{display:flex;align-items:flex-end;gap:1.5rem;margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--bdr);flex-wrap:wrap}
+.snap-snum{font-family:"Instrument Serif",serif;font-size:4.5rem;font-weight:400;line-height:1;color:var(--g)}
+.snap-smeta{flex:1;min-width:160px}
+.snap-smeta .oo{font-size:11px;color:var(--ink3);margin-bottom:3px}
+.snap-smeta .rl{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:5px}
+.snap-secs{display:flex;flex-direction:column;gap:1.75rem}
+.snap-sec h4{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:.65rem;padding-bottom:5px;border-bottom:1px solid var(--bdr)}
+.slist{list-style:none;display:flex;flex-direction:column;gap:5px}
+.slist li{font-size:13px;color:var(--ink2);padding-left:18px;position:relative;line-height:1.55}
+.slist li::before{content:"--";position:absolute;left:0;color:var(--ink4)}
+.slist.good li::before{content:"✓";color:var(--t)}
+.slist.risk li::before{content:"!";color:var(--r);font-weight:700}
+.obs-box{background:#1a3a2a08;border-left:3px solid var(--g2);border-radius:0 7px 7px 0;padding:1rem 1.25rem}
+.obs-box p{font-size:14px;color:var(--ink);line-height:1.65;font-style:italic}
+.otlk-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.75rem}
+.otlk-cell{border-radius:7px;padding:.85rem 1rem}
+.otlk-cell.act{background:var(--g3)}
+.otlk-cell.dont{background:var(--rb)}
+.otlk-cell .olbl{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem}
+.otlk-cell.act .olbl{color:var(--g)}
+.otlk-cell.dont .olbl{color:var(--r)}
+.otlk-cell p{font-size:12px;line-height:1.55;color:var(--ink)}
+.otlk-key{background:var(--bg);border:1px solid var(--bdr);border-radius:7px;padding:.85rem 1rem;font-size:13px;color:var(--ink);line-height:1.5;font-style:italic}
+/* Action plan stages */
+.action-stages{display:flex;flex-direction:column;gap:.85rem}
+.astage{background:var(--bg);border:1px solid var(--bdr);border-radius:9px;padding:1rem 1.15rem}
+.astage-hd{display:flex;align-items:center;gap:10px;margin-bottom:.65rem}
+.astage-tag{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--g);color:#fff;padding:3px 9px;border-radius:4px;flex-shrink:0}
+.astage-title{font-size:13px;font-weight:700;color:var(--ink)}
+.astage-action{font-size:13px;color:var(--ink2);line-height:1.55;margin-bottom:.45rem}
+.astage-why{font-size:11px;color:var(--ink3);line-height:1.45;font-style:italic}
+/* Side income */
+.side-box{background:var(--ab);border:1px solid #e8d8a0;border-radius:9px;padding:1.1rem 1.25rem}
+.side-box p{font-size:13px;color:var(--ink);line-height:1.6}
+/* Upsell */
+.upsell-sec{background:var(--g);color:#fff;border-radius:10px;padding:1.5rem 1.75rem;margin-top:.5rem}
+.upsell-sec h4{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.7;margin-bottom:.65rem}
+.upsell-sec p{font-size:13px;line-height:1.6;opacity:.9;margin-bottom:1.1rem}
+.upsell-options{display:flex;flex-direction:column;gap:.7rem}
+.uopt{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:.9rem 1.1rem}
+.uopt-name{font-size:13px;font-weight:700;margin-bottom:.3rem}
+.uopt-desc{font-size:12px;opacity:.8;line-height:1.45;margin-bottom:.35rem}
+.uopt-price{font-size:13px;font-weight:700;opacity:.95}
+/* Legal footer */
+.legal-caveat{background:var(--bg);border-top:1px solid var(--bdr);padding:1rem 1.75rem;font-size:10px;color:var(--ink4);line-height:1.65}
+.sdr{display:flex;align-items:center;gap:8px}
+.sdn{font-size:11px;color:var(--ink2);width:165px;flex-shrink:0}
+.sdbw{height:6px;background:var(--bdr);border-radius:4px;overflow:hidden;flex:1}
+.sdbf{height:100%;background:var(--g2);border-radius:4px}
+.sdbf.w{background:var(--r)}
+.sds{font-size:11px;font-weight:700;color:var(--ink);width:34px;text-align:right}
+.sdims{display:flex;flex-direction:column;gap:8px}
+/* Generate loading */
+.gen-loading{display:none;padding:3rem;text-align:center}
+.gen-loading.on{display:block}
+.gen-spinner{width:44px;height:44px;border-radius:50%;border:3px solid var(--bdr);border-top-color:var(--g2);animation:spin .8s linear infinite;margin:0 auto 1rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+.gen-status{font-size:13px;color:var(--ink2);margin-top:.5rem}
+.snap-ft{background:var(--bg);border-top:1px solid var(--bdr);padding:.9rem 1.75rem;font-size:11px;color:var(--ink3);display:flex;justify-content:space-between;flex-wrap:wrap;gap:5px}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:1rem}
+.email-box{display:none;margin-top:1rem;background:var(--card);border:1px solid var(--bdr);border-radius:10px;padding:1.25rem}
+/* LOCK */
+.overlay{position:fixed;inset:0;background:rgba(26,26,24,.82);z-index:9999;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(3px);display:none}
+.lock-box{background:var(--card);border-radius:14px;padding:2.25rem 2rem;width:100%;max-width:360px;margin:1rem;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.25)}
+.lock-ico{width:50px;height:50px;border-radius:50%;background:var(--g3);display:flex;align-items:center;justify-content:center;margin:0 auto 1.1rem}
+.lock-box h3{font-family:"Instrument Serif",serif;font-size:1.4rem;font-weight:400;margin-bottom:.35rem}
+.lock-box p{font-size:13px;color:var(--ink3);margin-bottom:1.1rem;line-height:1.5}
+.lock-inp{font-family:"DM Sans",sans-serif;font-size:16px;width:100%;padding:11px 14px;border:1.5px solid var(--bdr);border-radius:8px;background:var(--bg);color:var(--ink);outline:none;text-align:center;letter-spacing:.1em;margin-bottom:.65rem;transition:border-color .15s}
+.lock-inp:focus{border-color:var(--g2)}
+.lock-inp.shake{animation:shake .35s ease;border-color:var(--r)}
+.unlock-btn{font-family:"DM Sans",sans-serif;font-size:14px;font-weight:700;padding:12px;background:var(--g);color:#fff;border:none;border-radius:8px;cursor:pointer;width:100%;transition:background .2s}
+.unlock-btn:hover{background:var(--g2)}
+.lock-err{font-size:12px;color:var(--r);margin-top:.5rem;min-height:16px}
+.lock-cancel{background:none;border:none;font-size:12px;color:var(--ink3);cursor:pointer;font-family:inherit;margin-top:.65rem}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+@media(max-width:600px){.fg,.fg3{grid-template-columns:1fr}.rg{grid-template-columns:1fr}.otlk-grid{grid-template-columns:1fr}}
+@media print{
+  .nav,.btn-row,.email-box,.paste-box,.rev-hd,.gen-loading{display:none!important}
+  body{background:#fff}
+  .snap-doc{display:block!important;border:none;border-radius:0}
+  .snap-doc *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+<!-- LOCK OVERLAY -->
+<div class="overlay" id="overlay">
+  <div class="lock-box">
+    <div class="lock-ico">
+      <svg width="22" height="22" fill="none" stroke="#2d6348" stroke-width="2.5" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path stroke-linecap="round" d="M7 11V7a5 5 0 0110 0v4"/></svg>
+    </div>
+    <h3>Admin Access</h3>
+    <p>Enter your admin password to continue.</p>
+    <input class="lock-inp" type="password" id="pw-inp" placeholder="Password" maxlength="40" onkeydown="if(event.key==='Enter')tryUnlock()">
+    <button class="unlock-btn" onclick="tryUnlock()">Unlock</button>
+    <div class="lock-err" id="lock-err"></div>
+    <button class="lock-cancel" onclick="closeOverlay()">Cancel</button>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <button class="nb on" id="nb-form" onclick="goPublic('form')">Assessment</button>
+  <span class="ntag" id="nav-tag" onclick="tapAdmin()">CareerRadar&#8482;</span>
+</nav>
+
+<!-- ASSESSMENT FORM -->
+<div class="sc on" id="sc-form">
+<div class="wrap">
+  <div class="fhd">
+    <div class="eyebrow">Mid-Career Job Risk Diagnostic</div>
+    <h1>CareerRadar&#8482;<br><em>Job Risk Assessment</em></h1>
+    <p>Mid-career risk usually shows up quietly: shrinking visibility, manager dependency, AI pressure, weak market optionality, and financial constraint moving together.</p>
+    <p style="margin-top:.85rem;font-size:14px;color:var(--ink2);max-width:560px;line-height:1.65">CareerRadar is not a personality test. It combines your function, sub-function, industry, and 25 answers to produce a role-aware diagnostic built around how organisations actually make people decisions.</p>
+  </div>
+
+  <div class="prog-wrap">
+    <div class="prog-meta"><span id="prog-txt">0 of 25 answered</span><span id="prog-pct">0%</span></div>
+    <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
+  </div>
+
+  <div class="pbox">
+    <div class="blabel">Your Profile</div>
+    <div class="fg">
+      <div class="fl"><label>Full Name *</label><input type="text" id="p-name" placeholder="Your name" autocomplete="name"></div>
+      <div class="fl"><label>Email Address *</label><input type="email" id="p-email" placeholder="your@email.com" autocomplete="email"></div>
+    </div>
+    <div class="fg3">
+      <div class="fl">
+        <label>Role Category *</label>
+        <select id="p-role-key" onchange="onRoleSelect()">
+          <option value="">Select your function...</option>
+          <optgroup label="Software Engineering">
+            <option value="java_dev">Java / Backend Engineering</option>
+            <option value="python_dev">Python / Data Engineering</option>
+            <option value="frontend_dev">Frontend / UI Development</option>
+            <option value="qa_eng">QA / Test Engineering</option>
+            <option value="bigdata_eng">Big Data / Data Platform</option>
+            <option value="devops_eng">DevOps / Platform / Cloud</option>
+          </optgroup>
+          <optgroup label="Finance">
+            <option value="finance_mgr">Finance / Accounts / FP&amp;A</option>
+          </optgroup>
+          <optgroup label="Management &amp; Operations">
+            <option value="proj_mgr">Project / Programme Management</option>
+            <option value="ops_mgr">Operations / Business Ops</option>
+          </optgroup>
+          <optgroup label="Human Resources">
+            <option value="hr_prof">Human Resources / People</option>
+          </optgroup>
+          <optgroup label="Sales, Customer &amp; Marketing">
+            <option value="sales_prof">Sales / Business Development</option>
+            <option value="mktg_prof">Marketing / Digital Marketing</option>
+          </optgroup>
+          <optgroup label="Other">
+            <option value="other">Other / Not Listed</option>
+          </optgroup>
+        </select>
+        <div class="hint" id="role-hint"></div>
+        <div class="msig" id="role-sig"></div>
+      </div>
+      <div class="fl" id="subfunc-col" style="display:none">
+        <label id="subfunc-label">Specific Function *</label>
+        <select id="p-subfunc" onchange="onSubFuncSelect()">
+          <option value="">Select...</option>
+        </select>
+        <div class="hint" id="subfunc-hint"></div>
+        <div class="msig" id="subfunc-sig"></div>
+      </div>
+      <div class="fl"><label>Industry</label><input type="text" id="p-industry" placeholder="e.g. IT Services, BFSI"></div>
+    </div>
+    <div class="fg">
+      <div class="fl"><label>Years of Experience</label>
+        <select id="p-exp"><option value="">Select</option><option>1-3 years</option><option>4-7 years</option><option>8-12 years</option><option>13-18 years</option><option>19+ years</option></select>
+      </div>
+      <div class="fl"><label>Age Band</label>
+        <select id="p-age"><option value="">Select</option><option>22-28</option><option>29-35</option><option>36-42</option><option>43-50</option><option>51+</option></select>
+      </div>
+    </div>
+    <div class="fg1" style="margin-bottom:1rem">
+      <div class="fl"><label>Your biggest career fear right now</label><textarea id="p-fear" placeholder="Be honest — this is private and directly shapes your report accuracy."></textarea></div>
+    </div>
+    <div class="fg1">
+      <div class="fl"><label>Hobby, skill, or outside interest <span style="font-weight:400;color:var(--ink3)">(optional - used for a side-income POV in your paid report)</span></label><textarea id="p-hobby" placeholder="e.g. Photography, cricket coaching, cooking, teaching, writing, Excel, mentoring - anything you do well outside work." style="min-height:54px"></textarea></div>
+    </div>
+  </div>
+
+  <div id="qcontainer"></div>
+
+  <div class="subrow">
+    <button class="btn-main" onclick="submitForm()">Get My Risk Assessment</button>
+    <span class="snote">Free &#183; 5&#8211;6 minutes &#183; Instant result</span>
+  </div>
+  <div class="errmsg" id="ferr">Please complete all required fields.</div>
+</div>
+</div>
+
+<!-- PREVIEW / THANK YOU -->
+<div class="sc" id="sc-thanks">
+<div class="prev-wrap">
+  <div id="prev-loading" style="text-align:center;padding:4rem 0">
+    <div style="width:52px;height:52px;border-radius:50%;background:var(--g3);display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem">
+      <svg width="24" height="24" fill="none" stroke="#2d6348" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+    </div>
+    <h2 style="font-family:'Instrument Serif',serif;font-size:1.6rem;font-weight:400;margin-bottom:.6rem">Submitted. Analysing your profile...</h2>
+    <p style="font-size:14px;color:var(--ink3)">Reading your 25 answers and identifying your pattern.</p>
+    <div style="margin-top:1.5rem;display:flex;justify-content:center">
+      <div style="width:120px;height:3px;background:var(--bdr);border-radius:2px;overflow:hidden">
+        <div id="load-bar" style="height:100%;background:var(--g2);border-radius:2px;width:0%;transition:width 2s ease"></div>
+      </div>
+    </div>
+  </div>
+  <div id="prev-result" style="display:none">
+    <div class="prev-card">
+      <div class="prev-top">
+        <div class="pe">CareerRadar&#8482; &#8212; Instant Result</div>
+        <h2 id="prev-header">Your Job Risk Assessment</h2>
+      </div>
+      <div class="prev-body">
+        <div class="prev-sec" style="display:flex;align-items:flex-end;gap:1.25rem;flex-wrap:wrap">
+          <div>
+            <div class="plabel">Your Score</div>
+            <div style="font-family:'Instrument Serif',serif;font-size:3.5rem;font-weight:400;color:var(--g);line-height:1" id="prev-score">-</div>
+            <div style="font-size:11px;color:var(--ink3);margin-top:2px">out of 125</div>
+          </div>
+          <div style="flex:1;min-width:160px;padding-bottom:.4rem">
+            <div id="prev-badge" style="margin-bottom:.5rem"></div>
+            <div style="font-size:13px;color:var(--ink2);line-height:1.55" id="prev-score-sent"></div>
+          </div>
+        </div>
+        <div class="prev-sec">
+          <div class="plabel">Your Dominant Pattern</div>
+          <div style="font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:.5rem" id="prev-pattern">-</div>
+          <div style="font-size:13px;color:var(--ink2);line-height:1.6" id="prev-pat-desc"></div>
+        </div>
+        <div class="prev-sec">
+          <div class="plabel">What Your Assessment Reveals</div>
+          <div class="truth-box"><p id="prev-truth">-</p></div>
+        </div>
+        <div>
+          <div class="plabel" style="margin-bottom:.75rem">Your Full Diagnostic Report Includes</div>
+          <div class="bullets" id="prev-bullets"></div>
+        </div>
+      </div>
+      <div class="prev-cta">
+        <p>Built from your 25 answers through a people-and-organisation design lens. Every section is specific to your function, sub-function, industry, and score combination. This is not generic AI career advice &#8212; it is a structured diagnostic built around how organisations actually evaluate roles, risk, visibility, and replacement pressure.</p>
+        <div class="cta-row">
+          <a id="cta-btn" href="#" class="btn-cta">Get Full Report &#8212; &#8377;399</a>
+          <span class="cta-note">Delivered to your inbox within 24 hours</span>
+        </div>
+        <button class="save-btn" onclick="dlPrevPdf()">Save this result as PDF</button>
+      </div>
+    </div>
+    <div class="next-steps">
+      <h3>What happens after you click above</h3>
+      <div class="step-row"><div class="step-n">1</div><div class="step-t"><strong>Complete payment of &#8377;399</strong> &#8212; secure, one-time. Takes under a minute.</div></div>
+      <div class="step-row"><div class="step-n">2</div><div class="step-t"><strong>Your full report is generated</strong> from your 25 answers &#8212; risks named mechanically, diagnosis, 4-stage action plan, 90-day outlook.</div></div>
+      <div class="step-row"><div class="step-n">3</div><div class="step-t"><strong>Delivered to your email</strong> within 24 hours. You keep it permanently. No subscription.</div></div>
+    </div>
+    <p style="font-size:12px;color:var(--ink3);text-align:center">Questions? Email <a id="contact-link" href="#" style="color:var(--g2);text-decoration:none">us directly</a> and we will respond within a few hours.</p>
+  </div>
+</div>
+</div>
+
+<!-- ADMIN VIEW -->
+<div class="sc" id="sc-admin">
+<div class="adm-wrap">
+  <div class="adm-hd">
+    <div><h2 id="adm-title">Admin Dashboard</h2><div class="adm-sub" id="adm-sub">CareerRadar Internal View</div></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn-sec" onclick="refreshPeople()">Refresh</button>
+      <button class="btn-sec" onclick="exportCsv()">Export CSV</button>
+      <button class="btn-sec btn-pri" onclick="goAdmin('reveal')">Generate Report</button>
+    </div>
+  </div>
+  <div class="pp">
+    <div class="pp-hd"><h3 id="pp-count">Submissions (0)</h3><span style="font-size:11px;color:var(--ink3)">Click a name to load their result</span></div>
+    <div class="pp-list" id="pp-list"><div class="pp-empty" id="pp-empty">No submissions yet.</div></div>
+  </div>
+  <div id="person-result" style="display:none">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:8px">
+      <div style="font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)" id="result-for">Showing result for -</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn-sec" id="copy-btn" onclick="copyResult()">Copy JSON</button>
+        <button class="btn-sec" onclick="dlJson()">Download JSON</button>
+        <button class="btn-sec" onclick="dlCsv()">Download CSV</button>
+        <button class="btn-sec btn-pri" onclick="loadReveal()">Generate Report</button>
+      </div>
+    </div>
+    <div class="rg">
+      <div class="rc"><div class="rlbl">Total Score</div><div class="score-big" id="r-score">-</div><div style="font-size:12px;color:var(--ink3);margin-top:2px">out of 125</div></div>
+      <div class="rc"><div class="rlbl">Risk Category</div><div class="rval" id="r-cat">-</div><div id="r-badge"></div></div>
+      <div class="rc full"><div class="rlbl">Dominant Pattern</div><div class="rval" id="r-pat">-</div><div style="font-size:12px;color:var(--ink2);margin-top:3px" id="r-patsub">-</div></div>
+    </div>
+    <div class="rc" style="margin-bottom:1rem"><div class="rlbl" style="margin-bottom:.75rem">Dimension Scores</div><div class="dbars" id="dbars"></div></div>
+    <div class="rc full" style="margin-bottom:1rem">
+      <div class="rlbl" style="margin-bottom:.75rem">All 25 Answers</div>
+      <div style="overflow-x:auto"><table class="atbl"><thead><tr><th>#</th><th>Question</th><th>Section</th><th>Score</th></tr></thead><tbody id="atbl"></tbody></table></div>
+    </div>
+    <div class="rc full"><div class="rlbl" style="margin-bottom:.65rem">Profile</div><div id="prof-disp" style="font-size:13px;color:var(--ink2);line-height:2"></div></div>
+  </div>
+  <div class="rc full" style="margin-top:1rem">
+    <div class="rlbl" style="margin-bottom:.65rem">Import Result (paste JSON from Google Sheet or admin)</div>
+    <textarea id="import-area" placeholder="Paste full JSON here..." style="font-family:monospace;font-size:12px;width:100%;min-height:80px;padding:10px;border:1px solid var(--bdr);border-radius:8px;background:var(--bg);color:var(--ink);outline:none;resize:vertical;margin-bottom:.75rem"></textarea>
+    <button class="btn-sec" onclick="importJson()">Load This Result</button>
+    <span id="import-err" style="font-size:12px;color:var(--r);margin-left:10px;display:none">Invalid JSON.</span>
+  </div>
+</div>
+</div>
+
+<!-- SNAPSHOT REVEAL (PAID REPORT GENERATION) -->
+<div class="sc" id="sc-reveal">
+<div class="rev-wrap">
+  <div class="rev-hd"><h2>Generate Client Report</h2><p>JSON pre-fills from the selected profile. Click Generate to build the full paid report via AI.</p></div>
+  <div class="paste-box">
+    <label>Assessment Result JSON</label>
+    <textarea id="paste-in" placeholder="JSON pre-fills here when you select a profile in Admin and click Generate Report. Or paste manually."></textarea>
+  </div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.25rem">
+    <button class="btn-main" onclick="genSnapAI()">Generate Full Report</button>
+    <label class="btn-sec" style="display:inline-flex;align-items:center;cursor:pointer;padding:8px 14px">
+      Import JSON file<input type="file" accept=".json" onchange="importJsonFile(event)" style="display:none">
+    </label>
+  </div>
+  <div class="errmsg" id="perr" style="display:none">Could not read the data. Paste the full JSON from Admin view.</div>
+
+  <!-- Loading state -->
+  <div class="gen-loading" id="gen-loading">
+    <div class="gen-spinner"></div>
+    <div style="font-size:14px;font-weight:600;color:var(--ink);margin-bottom:.4rem">Building your client&#8217;s diagnostic report...</div>
+    <div class="gen-status" id="gen-status">Analysing dimension scores and sub-function context</div>
+  </div>
+
+  <!-- Full paid report document -->
+  <div class="snap-doc" id="snap-doc">
+    <div class="snap-top">
+      <div class="se">CareerRadar&#8482; &#8212; India&#8217;s Mid-Career Job Risk Diagnostic</div>
+      <h2 id="sn-name">Report</h2>
+      <div class="sm" id="sn-meta">-</div>
+    </div>
+    <div class="snap-body">
+      <!-- Score + Pattern header -->
+      <div class="snap-srow">
+        <div class="snap-snum" id="sn-score">-</div>
+        <div class="snap-smeta">
+          <div class="oo">out of 125</div>
+          <div class="rl" id="sn-rl">-</div>
+          <div id="sn-badge2" style="margin-top:4px"></div>
+        </div>
+        <div style="flex:1;min-width:160px">
+          <div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin-bottom:5px">Dominant Pattern</div>
+          <div style="font-size:13px;font-weight:700;color:var(--ink)" id="sn-pat">-</div>
+        </div>
+      </div>
+      <div class="snap-secs">
+
+        <!-- Score interpretation -->
+        <div class="snap-sec">
+          <h4>What This Score Means For You</h4>
+          <p id="sn-score-interp" style="font-size:13px;color:var(--ink2);line-height:1.65">-</p>
+        </div>
+
+        <!-- Dimension scores -->
+        <div class="snap-sec">
+          <h4>Your 9-Dimension Profile</h4>
+          <div class="sdims" id="sn-dims"></div>
+          <p id="sn-dim-analysis" style="font-size:13px;color:var(--ink2);line-height:1.65;margin-top:.9rem">-</p>
+        </div>
+
+        <!-- Pattern analysis -->
+        <div class="snap-sec">
+          <h4>Your Dominant Pattern</h4>
+          <p id="sn-pat-para1" style="font-size:13px;color:var(--ink2);line-height:1.65;margin-bottom:.75rem">-</p>
+          <p id="sn-pat-para2" style="font-size:13px;color:var(--ink2);line-height:1.65">-</p>
+        </div>
+
+        <!-- Risks -->
+        <div class="snap-sec">
+          <h4>The Real Risks</h4>
+          <div id="sn-risks-detail" style="display:flex;flex-direction:column;gap:.85rem"></div>
+        </div>
+
+        <!-- Strengths -->
+        <div class="snap-sec">
+          <h4>What Is Actually Working In Your Favour</h4>
+          <ul class="slist good" id="sn-str"></ul>
+        </div>
+
+        <!-- Diagnosis -->
+        <div class="snap-sec">
+          <h4>The Diagnosis</h4>
+          <div class="obs-box"><p id="sn-obs">-</p></div>
+        </div>
+
+        <!-- Action plan (4 stages) -->
+        <div class="snap-sec">
+          <h4>Your Action Plan</h4>
+          <div class="action-stages" id="sn-action-stages">
+            <div class="astage" id="sn-stage-w1">
+              <div class="astage-hd"><span class="astage-tag">Week 1–2</span><span class="astage-title" id="sn-w1-title">The Stabiliser</span></div>
+              <div class="astage-action" id="sn-w1-action">-</div>
+              <div class="astage-why" id="sn-w1-why">-</div>
+            </div>
+            <div class="astage" id="sn-stage-w3">
+              <div class="astage-hd"><span class="astage-tag">Week 3–4</span><span class="astage-title" id="sn-w3-title">The Foundation Move</span></div>
+              <div class="astage-action" id="sn-w3-action">-</div>
+              <div class="astage-why" id="sn-w3-why">-</div>
+            </div>
+            <div class="astage" id="sn-stage-m2">
+              <div class="astage-hd"><span class="astage-tag">Month 2</span><span class="astage-title" id="sn-m2-title">The Visibility Shift</span></div>
+              <div class="astage-action" id="sn-m2-action">-</div>
+              <div class="astage-why" id="sn-m2-why">-</div>
+            </div>
+            <div class="astage" id="sn-stage-m3">
+              <div class="astage-hd"><span class="astage-tag">Month 3</span><span class="astage-title" id="sn-m3-title">The Position Lock</span></div>
+              <div class="astage-action" id="sn-m3-action">-</div>
+              <div class="astage-why" id="sn-m3-why">-</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 90-Day Outlook -->
+        <div class="snap-sec">
+          <h4>90-Day Outlook</h4>
+          <div class="otlk-grid">
+            <div class="otlk-cell act"><div class="olbl">If You Act</div><p id="sn-otlk-act">-</p></div>
+            <div class="otlk-cell dont"><div class="olbl">If You Don&#8217;t</div><p id="sn-otlk-dont">-</p></div>
+          </div>
+          <div class="otlk-key" id="sn-otlk-key">-</div>
+        </div>
+
+        <!-- Side income POV -->
+        <div class="snap-sec" id="sn-side-sec" style="display:none">
+          <h4>A Note on Side Income</h4>
+          <div class="side-box"><p id="sn-side-income">-</p></div>
+          <p style="font-size:11px;color:var(--ink3);margin-top:.6rem;line-height:1.5">This is an observational note based on your stated interests &#8212; not a business recommendation. Treat it as one angle to explore, not a plan to execute.</p>
+        </div>
+
+        <!-- Upsell (Tier 1 and 2 only) -->
+        <div class="snap-sec" id="sn-upsell-sec" style="display:none">
+          <div class="upsell-sec">
+            <h4>Going Further</h4>
+            <p id="sn-upsell-intro">This report gives you the full diagnostic and the action sequence. For most people, it is enough to get moving independently.</p>
+            <div class="upsell-options" id="sn-upsell-opts"></div>
+            <p style="font-size:11px;opacity:.7;margin-top:1rem">To discuss whether this applies to your situation, reply directly to this report email.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="legal-caveat">
+      <strong>Diagnostic disclaimer:</strong> This report is generated from a self-assessment and is for informational, educational, and reflective use only. It is not legal, financial, medical, psychological, business, employment, investment, or professional advice, and it should not be treated as an instruction to resign, invest, start a business, confront an employer, or make any major career or financial decision. The analysis is based on self-reported answers and general role-market patterns; it may be incomplete, inaccurate, or not applicable to your employer, sector, location, health, finances, or personal circumstances. CareerRadar and its operators are not responsible for any loss, distress, employment outcome, financial outcome, business outcome, relationship issue, or other consequence arising from decisions made after reading this report. If you are under severe stress, facing a legal/employment dispute, or considering a major financial or career move, speak with a qualified professional before acting.
+    </div>
+    <div class="snap-ft">
+      <span id="sn-ft-nm">-</span>
+      <span style="color:var(--ink4)">CareerRadar&#8482;</span>
+      <span id="sn-ft-dt">-</span>
+    </div>
+  </div>
+
+  <div class="btn-row" id="snap-btns" style="display:none">
+    <button class="btn-sec btn-pri" onclick="dlPdf()">Download PDF</button>
+    <button class="btn-sec" onclick="dlWord()">Download Word (.doc)</button>
+    <button class="btn-sec" onclick="copySnap()">Copy Text</button>
+    <button class="btn-sec" onclick="toggleEmailBox()">Email to Client</button>
+  </div>
+  <div class="email-box" id="email-box">
+    <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin-bottom:.75rem">Send Report to Client</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:.75rem">
+      <div style="flex:1;min-width:200px">
+        <label style="font-size:11px;font-weight:600;color:var(--ink2);display:block;margin-bottom:4px">Client Email</label>
+        <input type="email" id="client-email" placeholder="client@email.com" style="font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 12px;border:1px solid var(--bdr);border-radius:7px;background:var(--bg);color:var(--ink);outline:none;width:100%">
+      </div>
+      <div style="display:flex;align-items:flex-end">
+        <button class="btn-sec btn-pri" onclick="sendEmail()" style="height:38px">Send</button>
+      </div>
+    </div>
+    <p style="font-size:11px;color:var(--ink3)">Opens your email app with the full report pre-loaded. Client receives the complete diagnostic.</p>
+  </div>
+</div>
+</div>
+
+<script>
+// ============================================================
+// CONFIG
+// ============================================================
+var CFG = {
+  adminPwd:   'vishal2025',
+  sheetsUrl:  '',
+  email:      'vishal_profn@yahoo.com',
+  paymentUrl: 'YOUR_RAZORPAY_LINK'
+};
+var STORE_KEY = 'cr_v5';
+
+// ============================================================
+// FUNCTION-LEVEL ROLE INTELLIGENCE
+// (Used as 40% backdrop context; sub-function provides 60%)
+// ============================================================
+var ROLES = {
+  java_dev:{label:'Java / Backend Engineering',signal:'cooling',sigTxt:'Java dev market is cooling — this assessment matters',sigClr:'#7a5c00',sigBg:'#fdf8e8',hint:'e.g. Java Developer, Spring Boot, Microservices',aiCtx:'GitHub Copilot, Cursor, CodeWhisperer, and similar tools already compress routine Java work. CRUD APIs, unit tests, DTO mapping, and Spring Boot scaffolding are functionally AI-assisted. Mid-level Java developers known mainly for routine backend implementation are under significant market pressure.',protected:'System architecture, distributed systems design, performance debugging, and tech-lead functions require judgment that AI cannot replicate.',market:'Mid-level Java implementation work is cooling. Backend Lead, Platform Engineer, and Java Architect narratives are more defensible.',acts:['Stop writing boilerplate manually — use Copilot for it and redirect that time to architecture documentation and design reviews','Propose the architecture for one new module this month before being asked to implement it','Your next title should reference a system you designed, not a language you code in']},
+  python_dev:{label:'Python / Data Engineering',signal:'bifurcated',sigTxt:'Python market is split — role type determines your risk',sigClr:'#7a5c00',sigBg:'#fdf8e8',hint:'e.g. Data Engineer, ETL, ML Engineer, Django/FastAPI',aiCtx:'Python is both heavily AI-assisted and central to AI/data work. Pure scripting and basic ETL work is automatable, while ML engineering and data platform architecture remain stronger.',protected:'ML model evaluation, data architecture design, pipeline orchestration at scale, and AI product integration require Python skills plus domain judgment.',market:'Python demand is bifurcated. Data science, ML, and platform roles are healthier than pure scripting or automation roles.',acts:['If not already using Python for ML workflows, start one small project this month using publicly available data','Learn one orchestration tool such as Airflow or Prefect — data engineers who manage pipelines are valued over those who only write them','Publish one GitHub project demonstrating data thinking, not just code quality']},
+  qa_eng:{label:'QA / Test Engineering',signal:'declining',sigTxt:'Manual QA is among the most at-risk roles right now',sigClr:'#8b2020',sigBg:'#fdf0f0',hint:'e.g. Manual QA, SDET, Selenium/Cypress, Automation Engineer',aiCtx:'Manual QA is being compressed by AI-powered test generation, automation suites, and integrated quality tooling. Test case writing, regression execution, and standard validation are the exposed layers.',protected:'Test strategy design, exploratory testing, QA lead functions that define quality frameworks remain human.',market:'Manual QA execution is under pressure. SDET, QA Strategy, Quality Lead, and release-risk ownership narratives are more stable.',acts:['Learn one AI-assisted testing tool such as Testim or Mabl this month','If you have not moved to automation yet, the SDET transition is urgent not optional','Write a test strategy document for one existing feature — not test cases, but quality philosophy and risk mapping']},
+  bigdata_eng:{label:'Big Data / Data Platform Engineering',signal:'strong',sigTxt:'Big data and data platform roles are well-positioned',sigClr:'#1a4a1a',sigBg:'#edf7ed',hint:'e.g. Spark, Databricks, Snowflake, Kafka, Data Architect',aiCtx:'Data platform engineers building and maintaining large-scale data infrastructure are in strong demand. The growth of AI has increased the need for engineers who manage data pipelines, lakehouses, and streaming systems.',protected:'Spark optimisation, data lakehouse architecture, real-time streaming, and cloud data platform engineering require deep judgment.',market:'Cloud data platform engineering is one of the few tech roles where India demand is growing. Databricks, Snowflake, and AWS data services expertise commands premium compensation.',acts:['Certify in one cloud data platform such as Databricks or Snowflake this quarter','Understand LLM data pipeline requirements — companies building AI products need data engineers who understand vector databases','Update LinkedIn with specific platforms and scale metrics']},
+  devops_eng:{label:'DevOps / Platform / Cloud Engineering',signal:'strong',sigTxt:'DevOps and platform engineering remains strong',sigClr:'#1a4a1a',sigBg:'#edf7ed',hint:'e.g. Kubernetes, Terraform, AWS/GCP/Azure, CI/CD, SRE',aiCtx:'DevOps and platform engineering are among the most resilient technical roles. Kubernetes orchestration, IaC, CI/CD design, and cloud cost management require systems thinking and operational judgment.',protected:'Platform reliability, security engineering, multi-cloud architecture, and FinOps require sustained human judgment.',market:'Cloud and DevOps engineers with Kubernetes, Terraform, and major cloud platforms are well-positioned in India.',acts:['Add AI and ML infrastructure knowledge — the next DevOps demand wave is from teams deploying AI models that need MLOps pipelines','Publish one IaC repository on GitHub','Focus on deepening cloud certifications and moving toward Platform Engineer or SRE titles']},
+  frontend_dev:{label:'Frontend / UI Development',signal:'softening',sigTxt:'Mid-level frontend roles are under AI pressure',sigClr:'#7a5c00',sigBg:'#fdf8e8',hint:'e.g. React, Angular, Vue, TypeScript, UI Engineer',aiCtx:'AI tools generate functional React and Vue components from descriptions in seconds. Standard UI component development, CSS styling, and CRUD-screen building are effectively automated for non-complex applications.',protected:'Complex state management, performance optimisation, accessibility engineering, design system architecture, and AI-native UX design are protected.',market:'India frontend postings are softening for mid-level React developers. Senior Frontend Architect and Design Systems Engineer roles are stable.',acts:['Use an AI frontend tool such as v0 or Cursor for one week — understand what it does well and where it fails','Move one project toward full-stack by learning one backend API pattern deeply','Target Senior Frontend Engineer, Design Systems, or Full Stack roles']},
+  finance_mgr:{label:'Finance / FP&A',signal:'stable_risk',sigTxt:'Finance roles stable at surface but shifting underneath',sigClr:'#7a5c00',sigBg:'#fdf8e8',hint:'e.g. Finance Controller, FP&A Manager, Business Finance Lead',aiCtx:'Routine financial reporting, month-end closing, and variance analysis are being automated by AI-powered FP&A platforms. Finance Managers who primarily produce reports rather than interpret them are at risk.',protected:'Business partnering, strategic financial planning, M&A support, and regulatory interpretation require judgment. Finance leaders who translate numbers into business decisions are protected.',market:'India BFSI and corporate finance roles are stable at senior levels but softening for mid-level transactional roles.',acts:['Learn one FP&A automation tool such as Anaplan or Power BI financial modelling','Present one financial insight to the business this quarter — not a report, but a recommendation with a decision attached','Target FP&A Manager, Finance Business Partner, or Strategic Finance roles']},
+  proj_mgr:{label:'Project / Programme Management',signal:'shifting',sigTxt:'Traditional PM roles are actively transitioning',sigClr:'#7a5c00',sigBg:'#fdf8e8',hint:'e.g. PMP, Agile PM, Delivery Manager, Scrum Master',aiCtx:'AI-powered project management tools now automate status updates, risk flagging, and resource allocation. Administrative project management is largely automatable.',protected:'Stakeholder management, conflict resolution, cross-functional alignment under ambiguity, and programme-level strategic decisions require human judgment.',market:'Demand for traditional Project Manager roles in India IT is declining. Programme Director, Transformation Lead, and Product-aligned PM roles are more stable.',acts:['Automate your status reporting using AI tools — the time saved should go into stakeholder strategy','Own one cross-functional problem nobody asked you to solve','Move toward Senior Programme Manager, Transformation Manager, or Product Manager titles']},
+  ops_mgr:{label:'Operations / Business Ops',signal:'mixed',sigTxt:'Operations roles are diverging — strategy vs execution',sigClr:'#7a5c00',sigBg:'#fdf8e8',hint:'e.g. Business Ops, Process Manager, Chief of Staff equivalent',aiCtx:'Process-heavy operations roles are experiencing automation pressure as RPA and intelligent process automation replace routine coordination tasks.',protected:'Process design, vendor negotiation, exception management, and cross-functional problem-solving require judgment.',market:'Operations roles in India are diverging. Pure process-execution roles are under pressure while Business Operations, Strategy and Operations, and Chief of Staff equivalent roles are growing.',acts:['Map which processes you manage that could be automated — then volunteer to lead that automation project','Quantify one operational improvement you drove with a specific metric','Target Business Operations, Strategy and Ops, or Operations Lead roles']},
+  hr_prof:{label:'Human Resources',signal:'bifurcated',sigTxt:'HR is splitting — select your specific function below',sigClr:'#7a5c00',sigBg:'#fdf8e8',hint:'Select your HR sub-function above',aiCtx:'HR is splitting sharply between transactional and strategic functions. Payroll, basic TA, and HR ops are under automation pressure. HRBP, OD, People Analytics, and C&B specialist roles are more stable.',protected:'Employee relations, culture strategy, senior talent decisions, and leadership coaching require human judgment and trust that cannot be automated.',market:'India HR market is bifurcating. Transactional and execution-layer HR roles are softening while strategic HR functions are stable or growing.',acts:['Identify which side of the HR bifurcation your current role sits on','Build one strategic deliverable this quarter that goes to a business leader, not the HR head','Target roles with "Business Partner", "Strategy", "Analytics", or "Lead" in the title']},
+  sales_prof:{label:'Sales / Business Development',signal:'stable',sigTxt:'Enterprise and consultative sales roles are holding up',sigClr:'#1a4a1a',sigBg:'#edf7ed',hint:'e.g. Account Manager, Enterprise Sales, BD Manager',aiCtx:'AI handles lead generation, email sequences, and CRM updates. But human relationship-building in B2B sales, enterprise deal negotiation, and complex consultative selling remain strongly protected.',protected:'Enterprise relationship management, complex negotiation, customer success for high-value accounts, and consultative selling require trust and human presence that AI cannot replicate.',market:'India B2B sales roles are holding up well. SaaS sales, enterprise tech sales, and consultative selling are in demand.',acts:['Use AI for meeting prep — research prospects, summarise call notes, and draft follow-ups. This makes you faster without reducing your value','Build LinkedIn as a thought leader in your domain','Focus on deal size and complexity growth at senior levels']},
+  mktg_prof:{label:'Marketing / Digital Marketing',signal:'splitting',sigTxt:'Marketing is splitting — strategy protected, production at risk',sigClr:'#7a5c00',sigBg:'#fdf8e8',hint:'e.g. Growth Manager, Brand Manager, Performance Marketing, Content',aiCtx:'AI generates ad copy, social content, email campaigns, and basic SEO content at scale. Mid-level marketing roles built around content production are significantly exposed.',protected:'Brand strategy, campaign strategy, customer insight analysis, positioning decisions, and senior marketing leadership require human judgment.',market:'India marketing roles are bifurcating sharply. Content and SEO executive roles are softening. Marketing Manager, Growth Lead, and CMO-track roles are stable.',acts:['Use AI to handle 80% of content production and spend the saved time on strategy','Create one piece of marketing analysis this month — not content, but strategic insight','Target Marketing Strategist, Growth Manager, or Brand Manager roles']},
+  other:{label:'Other Professional',signal:'unknown',sigTxt:'',sigClr:'',sigBg:'',hint:'Describe your specific role',aiCtx:'AI is affecting most professional roles though the degree varies significantly by function. Roles with high routine task content are more exposed; roles requiring judgment, relationships, and ambiguity are more protected.',protected:'Any work requiring human judgment, stakeholder trust, creative problem-solving, or real-world physical presence is more protected.',market:'Across most sectors: roles that produce outputs are under pressure; roles that decide what to produce and why are protected.',acts:['Map your weekly tasks into two columns: tasks that follow a rule (automatable) and tasks that require judgment (protected)','Identify the one contribution you make that no one else in your team makes and make it visible to someone above your manager','Research the senior version of your current role and understand what makes it protected']}
+};
+
+// ============================================================
+// HR SUB-FUNCTION DATABASE (Primary intelligence — 60% weight)
+// ============================================================
+var SUBROLES = {
+  hr_payroll:{
+    label:'Payroll Manager / Payroll Lead',
+    signal:'high_risk',sigTxt:'Payroll is the highest automation-risk HR function',sigClr:'#8b2020',sigBg:'#fdf0f0',
+    aiCtx:'Payroll processing is one of the most heavily automated HR functions in India. Cloud payroll platforms — Greythr, Keka, ADP, and HRMS integrations — now handle salary calculations, TDS deductions, PF/ESIC reconciliation, payslip generation, and compliance filings with minimal human intervention. A Payroll Manager who primarily operates these systems rather than governing them is in direct competition with automation. This risk is not future — it is current and accelerating.',
+    protected:'Payroll governance, statutory compliance interpretation, cross-geography payroll complexity for multi-state entities, audit management, and vendor oversight for outsourced payroll are protected. The Payroll professional who understands WHY the system produces a number — and can defend it in an audit, explain a statutory anomaly to Finance, or reconfigure the system for a regulatory change — is significantly more protected than one who monitors the run and fixes exceptions.',
+    market:'India payroll roles are under acute automation pressure at the execution layer. Senior Payroll Managers with deep statutory compliance, multi-state expertise, and systems-governance experience are stable. Mid-level Payroll Executives who primarily process and verify are facing direct displacement. The title "Payroll Executive" is the most pressured in this function.',
+    acts:['Get certified in one advanced statutory compliance domain — complex ESIC structures, multi-state PF regulations, or senior employee TDS planning — at a level where you advise on edge cases, not just process standard inputs','Reposition your role around payroll system configuration, audit readiness, and compliance reporting rather than monthly processing. The person who sets up and governs the system is safer than the one who runs it.','Target Payroll Governance Lead, Statutory Compliance Manager, or HR Compliance & Payroll Head titles — actively move away from "Payroll Executive" or "Payroll Processor"']
+  },
+  hr_hrbp:{
+    label:'HR Business Partner / People Partner',
+    signal:'stable',sigTxt:'HRBP roles are the growth end of the HR market',sigClr:'#1a4a1a',sigBg:'#edf7ed',
+    aiCtx:'HRBP roles are among the most AI-resistant in HR. They require relationship trust, business context, political judgment, and the ability to advise under ambiguity — none of which are automatable. AI handles the transactional HR beneath the HRBP layer. However, HRBPs who spend most of their time on operational HR tasks — approvals, escalations, policy clarifications — rather than business advisory work are inadvertently positioning themselves in the wrong tier.',
+    protected:'Senior talent decisions, leadership effectiveness conversations, org design support, culture management, and navigating difficult people situations at senior levels require human judgment, trust, and political awareness. An HRBP seen by business leaders as a strategic advisor — not a process owner — is in a structurally strong position.',
+    market:'HRBP, People Partner, and HR Lead roles are the stable end of the India HR market. Demand is concentrated in high-growth tech, BFSI, and Global Capability Centre sectors. The shift from HR generalist to People Partner defines the direction of safety in this function.',
+    acts:['Claim ownership of one strategic people problem in your business unit — a retention issue, a capability gap, or a team effectiveness problem — and produce an end-to-end diagnosis and recommendation, not a policy response','Build a relationship with at least one senior business leader who is not your primary stakeholder. Lateral influence capacity is what separates a transactional HRBP from a protected one.','Get fluent in the P&L and headcount economics of your business unit. HRBPs who understand what a headcount decision costs the business — and what it produces — operate in a fundamentally different conversation.']
+  },
+  hr_ta:{
+    label:'Talent Acquisition Manager / Senior Recruiter',
+    signal:'splitting',sigTxt:'TA is bifurcating sharply between sourcing and strategy',sigClr:'#7a5c00',sigBg:'#fdf8e8',
+    aiCtx:'AI sourcing tools — LinkedIn Recruiter AI, SeekOut, HireEZ — now identify and rank candidates with minimal human input. JD writing, initial screening questions, and interview scheduling are largely automated. Volume recruitment at junior levels is effectively AI-handled. TA professionals primarily doing sourcing and scheduling have reduced leverage in their role than they had two years ago.',
+    protected:'Senior hiring for niche or leadership roles, executive search, employer branding strategy, candidate experience design for critical roles, and hiring manager advisory work require human judgment and relationship skill. These are the protected end of this function.',
+    market:'India TA market is splitting. Bulk and junior hiring TA roles are softening. Senior TA Partner and Talent Acquisition Lead roles — specialising in niche, leadership, or diversity hiring — are stable. The title "Recruiter" or "Talent Acquisition Executive" is under the most pressure.',
+    acts:['Move at least 40% of your recruiting focus toward niche or senior roles where AI sourcing consistently fails. These require relationship depth, market knowledge, and context that tools cannot replicate.','Build capability in employer branding or talent market intelligence — produce one market landscape or EVP insight for your leadership this quarter that goes beyond a hiring metrics report','Position toward Talent Acquisition Partner, Senior TA Specialist (leadership/niche), or Talent Strategy roles. Generalist recruiter titles are the most exposed.']
+  },
+  hr_ld:{
+    label:'L&D Manager / Learning Specialist',
+    signal:'shifting',sigTxt:'L&D is shifting from delivery to design and business impact',sigClr:'#7a5c00',sigBg:'#fdf8e8',
+    aiCtx:'AI-generated e-learning modules, automated learning path recommendations, and LXP platforms are reducing the need for manual L&D content development and training coordination. L&D professionals primarily involved in content creation and scheduling are at moderate risk. Those who own learning strategy and can demonstrate business outcome linkage are protected.',
+    protected:'Leadership development programme design, learning needs analysis tied to business problems, capability framework development, and facilitation of complex behaviour-change interventions require human judgment and design intelligence. The L&D professional who can demonstrate ROI in business terms — reduced attrition, faster capability ramp, improved manager effectiveness — is in a strong position.',
+    market:'India L&D roles are stable at the strategic level. Learning Business Partner, Leadership Development Manager, and Capability Strategy roles are in demand. Content production and training coordination roles are softening as AI handles more of that layer.',
+    acts:['Pick one active business problem — not a training request — and build a learning solution with a measurable outcome attached. Present the outcome data to the business, not just the HR head.','Get fluent in one LXP or learning analytics platform — Cornerstone, EdCast, or similar. The L&D professional who uses data to show learning impact is significantly more protected than one who measures attendance.','Move toward Learning Business Partner, Leadership Development, or Capability Strategy titles. "L&D Manager" and "Training Manager" are the most commoditised positions in this function.']
+  },
+  hr_comp:{
+    label:'Compensation & Benefits Manager / Total Rewards',
+    signal:'stable_risk',sigTxt:'C&B requires technical depth — that depth is your protection',sigClr:'#7a5c00',sigBg:'#fdf8e8',
+    aiCtx:'Compensation benchmarking data is increasingly available through automated platforms — Mercer, Aon, Radford — reducing the need for manual survey analysis. Benefits administration is largely automated. However, C&B strategy — designing compensation structures, managing equity plans, executive compensation, sales incentive design, and navigating pay equity — requires specialist expertise that AI does not replace.',
+    protected:'Total rewards strategy, job evaluation and levelling frameworks, executive compensation and ESOP administration, sales compensation design, and pay equity analysis are technically complex and require judgment. C&B professionals with deep methodology expertise are well-protected.',
+    market:'India C&B roles are stable at the senior specialist level. Total Rewards Manager, Compensation Analyst (senior), and Global Mobility roles are in steady demand in large enterprises and GCCs. The risk is for mid-level C&B generalists whose work overlaps with automated benchmarking outputs.',
+    acts:['Develop deep expertise in one complex area — ESOP administration, sales incentive architecture, or global pay equity — that cannot be handled by standard benchmarking platforms','Build proficiency in one compensation modelling tool beyond Excel — Mercer Comptryx, Radford, or Payscale — and position yourself as the organisation\'s benchmark intelligence owner rather than its benchmark user','Target Total Rewards Manager, Compensation Design Lead, or HR Analytics + Rewards hybrid roles']
+  },
+  hr_od:{
+    label:'OD Manager / Culture Lead / Org Design',
+    signal:'stable',sigTxt:'OD remains one of the most protected HR niches',sigClr:'#1a4a1a',sigBg:'#edf7ed',
+    aiCtx:'OD and culture work is among the least automatable HR functions. AI cannot design organisations, navigate power dynamics in a restructuring, build psychological safety in a dysfunctional team, or diagnose systemic capability gaps. OD professionals who work at the intersection of business strategy and human systems are in a structurally strong position.',
+    protected:'Org design and restructuring support, culture transformation programmes, team effectiveness interventions, leadership assessment, and change management require deep human judgment, influence skills, and systemic thinking. Supply of genuinely skilled OD professionals is still limited relative to demand.',
+    market:'OD and organisational effectiveness roles are in growing demand in large enterprises, consulting practices, and GCCs dealing with post-merger integration or cultural transformation. This is a supply-demand gap that works in your favour if you can demonstrate real OD capability.',
+    acts:['Pick one org or culture problem your business is currently struggling with and produce a structured one-page diagnostic — root cause analysis, not a training recommendation. That is the OD professional\'s primary deliverable.','Build a portfolio of at least one completed OD intervention with a measurable outcome: culture score improvement, reduction in team escalations, or span-of-control optimisation with documented rationale.','Network into the consulting side of OD — McKinsey OrgSolutions, Mercer, Korn Ferry, or boutique OD consultancies regularly hire experienced OD practitioners for project-based and permanent work.']
+  },
+  hr_analytics:{
+    label:'HR Analytics Manager / People Data Lead',
+    signal:'strong',sigTxt:'People Analytics is one of the stronger HR niches right now',sigClr:'#1a4a1a',sigBg:'#edf7ed',
+    aiCtx:'People Analytics professionals are net beneficiaries of AI — they use AI tools to analyse workforce data, predict attrition, model workforce planning scenarios, and translate HR data into business decisions. This function is growing, not shrinking. The risk in this role is for professionals stuck at the dashboard level rather than the insight and decision-advisory level.',
+    protected:'Workforce planning, attrition prediction modelling, DEI analytics, org network analysis, and connecting people data to business trade-offs are high-value and protected. HR Analytics professionals who advise business decisions — not just produce dashboards — are very well-positioned.',
+    market:'HR Analytics and People Data roles are a stronger specialisation inside HR, especially in GCCs, large enterprises, and organisations building workforce planning capability. Supply of genuinely skilled analysts is still limited relative to demand.',
+    acts:['Build and present one predictive model — even a simple regression — that produces a specific business recommendation for your CHRO or a business leader. Not a dashboard. A recommendation.','Get proficient in Python or R for HR data analysis, not just Excel and Power BI. Programming capability makes your analytics profile materially more valuable than dashboard-only HR reporting.','Target People Analytics Lead, Workforce Planning Analyst, or HR Data Science roles. This is a stronger segment of HR and not yet as crowded as generalist HR paths.']
+  },
+  hr_ops:{
+    label:'HR Operations Manager / HRIS Lead',
+    signal:'high_risk',sigTxt:'HR Ops is under heavy automation pressure at the execution layer',sigClr:'#8b2020',sigBg:'#fdf0f0',
+    aiCtx:'HR Operations is one of the most automated functions in HR. Employee lifecycle transactions — onboarding, offboarding, transfers, letter generation — along with policy query handling, data entry, and HRMS data management are increasingly handled by AI-powered platforms. HR Ops professionals primarily executing transactions are in direct structural competition with automation.',
+    protected:'HRIS implementation and configuration, HR process design, vendor management, cross-system data governance, and audit readiness require human judgment. The HR Ops professional who owns the system architecture and process design — rather than operates the system — is significantly safer.',
+    market:'India HR Operations roles are under pressure at the execution level. HRIS Manager, HR Systems Analyst, and HR Process Design roles are more stable. The career-preserving shift is from "HR Ops Executive" to "HR Systems and Process Owner".',
+    acts:['Get certified in the primary HRMS your organisation uses — Darwinbox, SAP SuccessFactors, or Workday — at an admin and configuration level. This repositions you from system operator to system owner.','Map two current HR processes that are still manual and present an automation proposal with a cost-benefit case. That is an HRIS Manager move, not an HR Ops move.','Target HRIS Manager, HR Systems Lead, or HR Process Improvement roles. These are the protected titles in this function.']
+  }
+};
+
+function mkSub(label, signal, sigTxt, sigClr, sigBg, aiCtx, protectedCtx, market, acts){
+  return {label:label,signal:signal,sigTxt:sigTxt,sigClr:sigClr,sigBg:sigBg,aiCtx:aiCtx,protected:protectedCtx,market:market,acts:acts};
+}
+Object.assign(SUBROLES,{
+  java_spring:mkSub('Spring Boot / API Developer','cooling','Spring Boot/API work is useful but boilerplate-heavy',ROLES.java_dev.sigClr,ROLES.java_dev.sigBg,'Spring Boot CRUD APIs, controllers, DTO mapping, unit tests, and standard service scaffolding are now heavily AI-assisted. The exposed part is not Java itself; it is being known only for predictable implementation work.','API design, performance debugging, distributed systems ownership, security decisions, and production reliability remain protected because they require tradeoff judgment and context.','Java API demand remains, but the safer market narrative is backend system ownership, not framework execution.',['Use Copilot/Cursor for scaffolding and spend the saved time writing one architecture note for a critical service','Rewrite one resume bullet from "developed APIs" to latency, reliability, security, cost, or customer impact','Ask to own one design review or incident review this month']),
+  java_arch:mkSub('Backend Lead / Java Architect','stable','Architecture-led Java profiles are better protected',ROLES.java_dev.sigClr,ROLES.java_dev.sigBg,'AI can accelerate implementation but cannot own cross-service tradeoffs, migration strategy, production risk, or platform standards.','Architecture governance, design review, reliability ownership, and mentoring are defensible because they combine technical and organisational judgment.','Architect/lead backend roles are more resilient than mid-level implementation roles.',['Create a reusable architecture decision record for one system tradeoff','Document the platform standards you influence and attach business outcomes to them','Move your profile language from "Java" to "platform/system ownership"']),
+  qa_manual:mkSub('Manual QA / Functional Tester','high_risk','Manual QA is one of the most exposed sub-functions',ROLES.qa_eng.sigClr,ROLES.qa_eng.sigBg,'Manual regression execution, standard test case writing, and repetitive defect validation are being compressed by AI-assisted test generation and automation suites.','Exploratory testing, release-risk judgment, domain risk mapping, and quality strategy remain protected.','Manual QA execution roles are under visible pressure; SDET, QA Strategy, and Quality Lead paths are safer.',['Convert one manual regression suite into an automation-ready checklist with risk priority','Learn one automation/AI testing workflow and apply it to an existing feature','Reframe your work as release risk reduced, not test cases executed']),
+  qa_auto:mkSub('SDET / Automation Tester','stable_risk','Automation helps, but script maintenance alone is not enough',ROLES.qa_eng.sigClr,ROLES.qa_eng.sigBg,'Automation script creation is increasingly AI-assisted. The exposed layer is maintaining brittle scripts without owning quality architecture.','Automation framework design, CI integration, flaky-test reduction, release gates, and defect prevention are protected.','SDET demand is healthier than manual QA, but stronger for engineers who own test architecture.',['Audit the top 10 flaky tests and publish a root-cause fix plan','Attach your automation work to release speed or defect leakage metrics','Build one AI-assisted test generation workflow and define human review rules']),
+  data_bi:mkSub('BI / MIS / Reporting Analyst','stable_risk','Dashboard-only analytics is exposed',ROLES.bigdata_eng.sigClr,ROLES.bigdata_eng.sigBg,'Static dashboards, SQL pulls, and recurring MIS packs are being automated by self-serve BI and AI query tools.','Metric design, data interpretation, data-quality governance, and decision advisory remain protected.','BI roles are safer when the analyst owns decision quality, not only report production.',['For one dashboard, write the decision it should change and the business owner of that decision','Add a metric-quality note to one recurring report','Create one recommendation slide, not another chart']),
+  data_platform:mkSub('Big Data / Data Platform Engineer','strong','Data platform roles are well-positioned',ROLES.bigdata_eng.sigClr,ROLES.bigdata_eng.sigBg,'AI adoption increases demand for clean pipelines, governed data, streaming systems, and scalable data platforms.','Spark optimisation, Databricks/Snowflake architecture, data governance, latency/cost tradeoffs, and platform reliability are protected.','Big data/platform engineering remains a strong market pocket when tied to scale and governance.',['Quantify one pipeline in scale, latency, cost, reliability, or downstream business usage','Add lakehouse/vector-data/AI data readiness to your skill story','Publish one platform reliability or governance artifact internally']),
+  finance_fpa:mkSub('FP&A / Business Finance','stable','FP&A is protected when it drives decisions',ROLES.finance_mgr.sigClr,ROLES.finance_mgr.sigBg,'Variance commentary, report preparation, and spreadsheet modelling are increasingly automated by FP&A platforms.','Scenario planning, business partnering, commercial judgment, forecast interpretation, and decision support remain protected.','FP&A roles are stable when they influence business choices, not merely produce numbers.',['Convert your next report into three decisions leaders can make','Create one scenario model tied to revenue, cost, or cash risk','Build one monthly business review narrative in plain business language']),
+  finance_accounting:mkSub('Accounting / Controllership','stable_risk','Accounting is stable but routine close work is automating',ROLES.finance_mgr.sigClr,ROLES.finance_mgr.sigBg,'Reconciliations, routine entries, and close checklists are increasingly platform-led.','Controls judgment, audit defence, accounting policy interpretation, and complex closure governance remain protected.','Controllership stays strong when it owns risk and accuracy, not only close execution.',['Document one control risk you prevented or reduced','Move one recurring close task into automation or exception-based review','Build evidence around audit readiness and policy judgment']),
+  finance_payroll:mkSub('Payroll Finance / Payroll Accounting','high_risk','Payroll accounting execution is automation-heavy',ROLES.finance_mgr.sigClr,ROLES.finance_mgr.sigBg,'Payroll accounting, accrual checks, statutory reconciliation, and standard payroll entries are increasingly automated across HRMS-finance integrations.','Cross-system controls, statutory interpretation, audit readiness, and exception governance remain protected.','Execution-heavy payroll finance roles are pressured; governance and compliance-heavy roles are safer.',['Shift one task from manual verification to exception reporting','Own a payroll-finance control matrix and present it to Finance/HR','Target payroll governance, compliance, or HR-finance control roles']),
+  finance_audit:mkSub('Internal Audit / Risk / Compliance','stable','Audit and risk are protected when judgment-led',ROLES.finance_mgr.sigClr,ROLES.finance_mgr.sigBg,'Audit evidence collection and checklist testing are becoming easier to automate.','Risk judgment, control design, fraud pattern interpretation, regulatory nuance, and management influence remain protected.','Audit/risk roles remain resilient where they influence controls and business behaviour.',['Write one risk memo that explains business impact, not just finding severity','Use analytics to identify one exception pattern before the audit cycle','Build visibility with process owners before formal audit conversations']),
+  hr_er:mkSub('Employee Relations / HR Compliance','stable','ER remains protected because trust and judgment matter',ROLES.hr_prof.sigClr,ROLES.hr_prof.sigBg,'Policy query handling is automatable, but conflict resolution, disciplinary nuance, and employee relations cases are not.','Investigation judgment, documentation quality, legal-risk awareness, and manager advisory are protected.','ER and compliance roles stay relevant when they manage risk, not only answer policy questions.',['Create one manager advisory note that prevents escalation','Build a clean case-documentation template for recurring ER situations','Track the business risk reduced by your intervention']),
+  mkt_content:mkSub('Content Writer / Content Ops','high_risk','Generic content production is exposed',ROLES.mktg_prof.sigClr,ROLES.mktg_prof.sigBg,'Generic SEO blogs, captions, rewrites, and volume content are now easy to produce with AI.','Subject-matter interviewing, editorial judgment, brand voice, conversion thinking, and distribution analytics remain protected.','Content roles are pressured unless they own insight, domain depth, or business outcomes.',['Rework three content samples around leads, trust, retention, enablement, or ranking outcomes','Build an AI-draft plus human editorial QA workflow and document the quality bar','Interview one internal expert or customer to create insight AI cannot infer from a brief']),
+  mkt_growth:mkSub('Growth / Performance Marketing','stable_risk','Performance marketing is data-rich but margin-pressured',ROLES.mktg_prof.sigClr,ROLES.mktg_prof.sigBg,'Ad variants, campaign drafts, and basic optimisation are AI-assisted.','Channel strategy, funnel diagnosis, experimentation design, customer insight, and budget tradeoffs remain protected.','Growth roles stay strong when they own experiments and economics, not only campaign operation.',['Create one experiment memo with hypothesis, budget, metric, and stop rule','Connect one campaign result to CAC, LTV, or pipeline quality','Automate variant production and spend time on insight']),
+  mkt_brand:mkSub('Brand / Communications','stable','Brand strategy is more protected than content production',ROLES.mktg_prof.sigClr,ROLES.mktg_prof.sigBg,'Generic copy and announcement writing are easy to generate.','Positioning, reputation judgment, crisis response, executive communication, and narrative coherence remain protected.','Brand/communications roles remain healthier when tied to trust and strategic narrative.',['Rewrite one campaign around positioning choice, not asset production','Create a message house for one product, change, or leadership narrative','Build evidence of reputation risk reduced or trust built']),
+  sales_b2b:mkSub('B2B / Enterprise Sales','stable','Consultative sales remains strongly human',ROLES.sales_prof.sigClr,ROLES.sales_prof.sigBg,'Lead research, outreach, and CRM admin are automated.','Discovery, negotiation, account strategy, executive trust, and complex buying-cycle influence are protected.','Enterprise sales is resilient where deal complexity and relationship trust are high.',['Build a one-page strategy for your top five accounts','Report pipeline quality and decision-maker access, not only activity','Use AI for prep and follow-up so your human time goes into discovery and negotiation']),
+  sales_csm:mkSub('Customer Success / Account Management','stable_risk','CS is protected when it owns retention risk',ROLES.sales_prof.sigClr,ROLES.sales_prof.sigBg,'Usage summaries, renewal reminders, and support coordination can be automated.','Renewal risk diagnosis, stakeholder mapping, value realisation, and expansion strategy remain protected.','CS roles stay safer when measured by retention and account health, not ticket routing.',['Create a risk map for your top accounts with decision makers and blockers','Turn one QBR into a value-realisation conversation','Build a renewal-risk early warning checklist']),
+  ops_process:mkSub('Process Excellence / Business Ops','stable_risk','Process roles are safe only when they redesign work',ROLES.ops_mgr.sigClr,ROLES.ops_mgr.sigBg,'Tracking, coordination, and checklist supervision are being automated through workflow tools.','Process redesign, exception judgment, cost reduction, service quality, and cross-functional execution remain protected.','Business Ops is safer than execution ops when it owns measurable improvement.',['Quantify one process in time, cost, error rate, or customer impact','Propose one automation before someone else imposes it','Create a before/after process map with measurable value']),
+  ops_supply:mkSub('Supply Chain / Procurement / Logistics','stable_risk','Supply chain value sits in exceptions and leverage',ROLES.ops_mgr.sigClr,ROLES.ops_mgr.sigBg,'Routine tracking, vendor follow-ups, and purchase workflows are increasingly automated.','Vendor strategy, negotiation, exception handling, compliance, risk mitigation, and service continuity remain protected.','Procurement/logistics roles are stable when tied to savings, resilience, and vendor leverage.',['Document one vendor risk or saving opportunity with numbers','Own one exception-management playbook','Move your profile toward category management, supply planning, or vendor strategy']),
+  pm_scrum:mkSub('Scrum Master / Agile PM','high_risk','Ceremony-only agile roles are exposed',ROLES.proj_mgr.sigClr,ROLES.proj_mgr.sigBg,'Status collection, meeting notes, sprint summaries, and follow-up tracking are easy to automate.','Delivery risk ownership, stakeholder alignment, tradeoff decisions, and team effectiveness interventions remain protected.','Scrum-only profiles are pressured; delivery/programme/product-adjacent roles are safer.',['Replace status updates with risk-to-business-impact reporting','Own one blocker that requires stakeholder tradeoff, not facilitation','Build evidence that you improved delivery predictability']),
+  pm_delivery:mkSub('Delivery / Programme Manager','stable_risk','Delivery management is protected when risk-led',ROLES.proj_mgr.sigClr,ROLES.proj_mgr.sigBg,'Administrative PM work is automated; programme risk and escalation judgment are not.','Commercial delivery, scope negotiation, stakeholder trust, escalation handling, and dependency management are protected.','Delivery roles remain relevant when tied to revenue, customer impact, and risk control.',['Create a visible risk register linked to revenue, cost, customer, or compliance impact','Lead one tradeoff conversation instead of only documenting it','Map sponsors, blockers, and decision owners for your top initiative'])
+});
+
+// Sub-function dropdown configuration
+var SUBFUNC_CONFIG = {
+  java_dev: {
+    label: 'Your specific engineering function *',
+    options: [
+      {value:'java_spring', text:'Spring Boot / API Developer'},
+      {value:'java_arch', text:'Backend Lead / Java Architect'}
+    ]
+  },
+  qa_eng: {
+    label: 'Your specific QA function *',
+    options: [
+      {value:'qa_manual', text:'Manual QA / Functional Tester'},
+      {value:'qa_auto', text:'SDET / Automation Tester'}
+    ]
+  },
+  bigdata_eng: {
+    label: 'Your specific data function *',
+    options: [
+      {value:'data_bi', text:'BI / MIS / Reporting Analyst'},
+      {value:'data_platform', text:'Big Data / Data Platform Engineer'}
+    ]
+  },
+  finance_mgr: {
+    label: 'Your specific finance function *',
+    options: [
+      {value:'finance_fpa', text:'FP&A / Business Finance'},
+      {value:'finance_accounting', text:'Accounting / Controllership'},
+      {value:'finance_payroll', text:'Payroll Finance / Payroll Accounting'},
+      {value:'finance_audit', text:'Internal Audit / Risk / Compliance'}
+    ]
+  },
+  hr_prof: {
+    label: 'Your specific HR function *',
+    options: [
+      {value:'hr_payroll', text:'Payroll / Statutory Compliance'},
+      {value:'hr_hrbp',    text:'HR Business Partner / People Partner'},
+      {value:'hr_ta',      text:'Talent Acquisition / Recruiting'},
+      {value:'hr_ld',      text:'Learning & Development'},
+      {value:'hr_comp',    text:'Compensation & Benefits / Total Rewards'},
+      {value:'hr_od',      text:'OD / Culture / Org Design'},
+      {value:'hr_analytics',text:'HR Analytics / People Data'},
+      {value:'hr_ops',     text:'HR Operations / HRIS'},
+      {value:'hr_er',      text:'Employee Relations / HR Compliance'}
+    ]
+  },
+  mktg_prof: {
+    label: 'Your specific marketing function *',
+    options: [
+      {value:'mkt_content', text:'Content Writer / Content Ops'},
+      {value:'mkt_growth', text:'Growth / Performance Marketing'},
+      {value:'mkt_brand', text:'Brand / Communications'}
+    ]
+  },
+  sales_prof: {
+    label: 'Your specific sales/customer function *',
+    options: [
+      {value:'sales_b2b', text:'B2B / Enterprise Sales'},
+      {value:'sales_csm', text:'Customer Success / Account Management'}
+    ]
+  },
+  ops_mgr: {
+    label: 'Your specific operations function *',
+    options: [
+      {value:'ops_process', text:'Process Excellence / Business Ops'},
+      {value:'ops_supply', text:'Supply Chain / Procurement / Logistics'}
+    ]
+  },
+  proj_mgr: {
+    label: 'Your specific project/delivery function *',
+    options: [
+      {value:'pm_scrum', text:'Scrum Master / Agile PM'},
+      {value:'pm_delivery', text:'Delivery / Programme Manager'}
+    ]
+  }
+};
+
+// Returns the most specific role data available
+// 60% weight = sub-function; 40% = parent function
+function getRoleData(roleKey, subKey) {
+  var parent=ROLES[roleKey]||ROLES.other;
+  var sub=(subKey&&SUBROLES[subKey])?SUBROLES[subKey]:null;
+  if(!sub) return parent;
+  return {
+    label:sub.label,
+    parentLabel:parent.label,
+    signal:sub.signal||parent.signal,
+    sigTxt:sub.sigTxt||parent.sigTxt,
+    sigClr:sub.sigClr||parent.sigClr,
+    sigBg:sub.sigBg||parent.sigBg,
+    hint:parent.hint,
+    aiCtx:sub.aiCtx+' Parent-function backdrop: '+parent.aiCtx,
+    protected:sub.protected+' This sits inside the broader '+parent.label+' protection zone: '+parent.protected,
+    market:sub.market+' Broader function signal: '+parent.market,
+    acts:(sub.acts||[]).concat((parent.acts||[]).slice(0,2)),
+    subWeight:60,
+    parentWeight:40
+  };
+}
+
+// ============================================================
+// QUESTIONS
+// ============================================================
+var QS=[
+  {id:'q1',s:'Organisational Visibility',t:'Senior stakeholders beyond my immediate manager understand the value I bring.',rv:false},
+  {id:'q2',s:'Organisational Visibility',t:'If my manager leaves tomorrow, my position remains stable.',rv:false},
+  {id:'q3',s:'Organisational Visibility',t:'My work is connected to measurable business outcomes, not just operational activity.',rv:false},
+  {id:'q4',s:'Market Survivability',t:'I could realistically secure interviews externally within 60 days.',rv:false},
+  {id:'q5',s:'Market Survivability',t:'My current skills are still in strong demand outside my organisation.',rv:false},
+  {id:'q6',s:'Market Survivability',t:'I can clearly explain my business value in under 2 minutes.',rv:false},
+  {id:'q7',s:'AI Exposure',t:'A meaningful portion of my work can already be automated using AI tools.',rv:true},
+  {id:'q8',s:'AI Exposure',t:'My role requires judgment, influence, trust, or ambiguity-handling that AI cannot easily replace.',rv:false},
+  {id:'q9',s:'AI Exposure',t:'I actively understand how AI is changing my profession.',rv:false},
+  {id:'q10',s:'Internal Political Capital',t:'There are influential people inside my organisation who would advocate for me if required.',rv:false},
+  {id:'q11',s:'Internal Political Capital',t:'My performance narrative is shaped by more than one person.',rv:false},
+  {id:'q12',s:'Internal Political Capital',t:'I understand the informal power structure inside my organisation.',rv:false},
+  {id:'q13',s:'Performance & Positioning',t:'My actual contribution is accurately recognised during evaluations.',rv:false},
+  {id:'q14',s:'Performance & Positioning',t:'I proactively communicate impact, not just effort.',rv:false},
+  {id:'q15',s:'Performance & Positioning',t:'My role is seen as difficult to replace internally.',rv:false},
+  {id:'q16',s:'Career Optionality',t:'I have at least 2 realistic career paths available to me today.',rv:false},
+  {id:'q17',s:'Career Optionality',t:'My professional network could meaningfully help me during a job transition.',rv:false},
+  {id:'q18',s:'Career Optionality',t:'I am building career assets beyond my current employer (writing, certifications, visibility, reputation).',rv:false},
+  {id:'q19',s:'Financial Resilience',t:'I can sustain myself financially for at least 6 months without income.',rv:false},
+  {id:'q20',s:'Financial Resilience',t:'My financial obligations force me to tolerate unhealthy work situations.',rv:true},
+  {id:'q21',s:'Emotional & Psychological State',t:'I constantly feel uncertain about my long-term career stability.',rv:true},
+  {id:'q22',s:'Emotional & Psychological State',t:'I feel emotionally exhausted trying to remain relevant.',rv:true},
+  {id:'q23',s:'Emotional & Psychological State',t:'I believe my current career direction is sustainable for the next 5 years.',rv:false},
+  {id:'q24',s:'Strategic Relevance',t:'My role contributes directly to revenue, growth, transformation, or strategic execution.',rv:false},
+  {id:'q25',s:'Strategic Relevance',t:'If economic pressure increased tomorrow, my role would likely survive the first wave of cuts.',rv:false}
+];
+var SECS=(function(){var seen={},out=[];for(var i=0;i<QS.length;i++){if(!seen[QS[i].s]){seen[QS[i].s]=true;out.push(QS[i].s);}}return out;})();
+var SMAXES={'Organisational Visibility':15,'Market Survivability':15,'AI Exposure':15,'Internal Political Capital':15,'Performance & Positioning':15,'Career Optionality':15,'Financial Resilience':10,'Emotional & Psychological State':15,'Strategic Relevance':10};
+
+// ============================================================
+// STATE
+// ============================================================
+var adminOk=false, curResult=null, pendingMode=null;
+var tapCount=0, tapTimer=null;
+
+// ============================================================
+// INIT
+// ============================================================
+window.addEventListener('DOMContentLoaded',function(){
+  buildForm();
+  var ce=document.getElementById('contact-link');
+  if(ce) ce.href='mailto:'+CFG.email;
+  if(window.location.search.indexOf('admin')>=0||window.location.hash==='#admin'){
+    pendingMode='admin'; showLock();
+  }
+});
+
+// ============================================================
+// ADMIN AUTH
+// ============================================================
+function tapAdmin(){
+  tapCount++;
+  clearTimeout(tapTimer);
+  tapTimer=setTimeout(function(){tapCount=0;},800);
+  if(tapCount>=3){tapCount=0;pendingMode='admin';showLock();}
+}
+function showLock(){
+  document.getElementById('pw-inp').value='';
+  document.getElementById('lock-err').textContent='';
+  document.getElementById('overlay').style.display='flex';
+  setTimeout(function(){document.getElementById('pw-inp').focus();},120);
+}
+function closeOverlay(){
+  document.getElementById('overlay').style.display='none';
+  pendingMode=null;
+}
+function tryUnlock(){
+  var v=document.getElementById('pw-inp').value;
+  if(v===CFG.adminPwd){
+    adminOk=true;
+    document.getElementById('overlay').style.display='none';
+    injectAdminNav();
+    goAdmin(pendingMode||'admin');
+    pendingMode=null;
+  } else {
+    document.getElementById('lock-err').textContent='Incorrect password.';
+    var inp=document.getElementById('pw-inp');
+    inp.classList.add('shake'); inp.value='';
+    setTimeout(function(){inp.classList.remove('shake');},400);
+    inp.focus();
+  }
+}
+function injectAdminNav(){
+  if(document.getElementById('nb-admin')) return;
+  var nav=document.getElementById('nav');
+  var tag=document.getElementById('nav-tag');
+  var bA=document.createElement('button');
+  bA.className='nb'; bA.id='nb-admin'; bA.textContent='Admin';
+  bA.onclick=function(){goAdmin('admin');};
+  var bR=document.createElement('button');
+  bR.className='nb'; bR.id='nb-reveal'; bR.textContent='Generate Report';
+  bR.onclick=function(){goAdmin('reveal');};
+  nav.insertBefore(bR,tag); nav.insertBefore(bA,bR);
+}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function goPublic(m){
+  ['form','thanks','admin','reveal'].forEach(function(x){document.getElementById('sc-'+x).classList.remove('on');});
+  document.getElementById('sc-'+m).classList.add('on');
+  setActive(m); window.scrollTo(0,0);
+}
+function goAdmin(m){
+  if(!adminOk){pendingMode=m;showLock();return;}
+  if(m==='admin'){refreshPeople();if(curResult)renderAdmin(curResult);}
+  if(m==='reveal'&&curResult){
+    document.getElementById('paste-in').value=JSON.stringify(curResult,null,2);
+  }
+  ['form','thanks','admin','reveal'].forEach(function(x){document.getElementById('sc-'+x).classList.remove('on');});
+  document.getElementById('sc-'+m).classList.add('on');
+  setActive(m); window.scrollTo(0,0);
+}
+function setActive(m){
+  ['form','admin','reveal'].forEach(function(x){
+    var b=document.getElementById('nb-'+x);
+    if(b) b.classList.toggle('on',x===m||(x==='form'&&m==='thanks'));
+  });
+}
+
+// ============================================================
+// FORM BUILD
+// ============================================================
+function buildForm(){
+  var h='';
+  SECS.forEach(function(sec,si){
+    var qs=QS.filter(function(q){return q.s===sec;});
+    h+='<div class="qsec"><div class="qsec-hd"><div class="qsec-n">'+(si+1)+'</div><h3>'+sec+'</h3></div>';
+    qs.forEach(function(q){
+      var gi=QS.indexOf(q)+1;
+      h+='<div class="qcard"><div class="qn">Q'+gi+(q.rv?'<span class="rflag">Reverse</span>':'')+'</div>';
+      h+='<div class="qt">'+q.t+'</div>';
+      h+='<div class="slbl"><span>Strongly Disagree</span><span>Strongly Agree</span></div>';
+      h+='<div class="srow">';
+      for(var v=1;v<=5;v++){
+        h+='<input type="radio" name="'+q.id+'" id="'+q.id+'_'+v+'" value="'+v+'" onchange="updateProg()">';
+        h+='<label for="'+q.id+'_'+v+'">'+v+'</label>';
+      }
+      h+='</div></div>';
+    });
+    h+='</div>';
+  });
+  document.getElementById('qcontainer').innerHTML=h;
+}
+
+// ============================================================
+// ROLE + SUB-FUNCTION SELECT
+// ============================================================
+function onRoleSelect(){
+  var key=document.getElementById('p-role-key').value;
+  var hintEl=document.getElementById('role-hint');
+  var sigEl=document.getElementById('role-sig');
+  var subfuncCol=document.getElementById('subfunc-col');
+  var subfuncSel=document.getElementById('p-subfunc');
+  var subfuncLbl=document.getElementById('subfunc-label');
+  var subfuncSig=document.getElementById('subfunc-sig');
+  var subfuncHint=document.getElementById('subfunc-hint');
+
+  // Reset sub-function
+  subfuncCol.style.display='none';
+  subfuncSel.innerHTML='<option value="">Select...</option>';
+  subfuncSig.style.display='none';
+
+  if(!key){hintEl.style.display='none';sigEl.style.display='none';return;}
+
+  var r=ROLES[key]||ROLES.other;
+
+  // Show function-level signal
+  if(r.sigTxt){
+    sigEl.textContent=r.sigTxt;
+    sigEl.style.color=r.sigClr;
+    sigEl.style.background=r.sigBg;
+    sigEl.style.display='block';
+  } else {sigEl.style.display='none';}
+  hintEl.textContent=r.hint||'Select the closest fit, then choose the specific sub-function if shown.';
+  hintEl.style.display='block';
+
+  // Show sub-function dropdown if defined
+  var cfg=SUBFUNC_CONFIG[key];
+  if(cfg){
+    subfuncLbl.textContent=cfg.label;
+    cfg.options.forEach(function(o){
+      var opt=document.createElement('option');
+      opt.value=o.value; opt.textContent=o.text;
+      subfuncSel.appendChild(opt);
+    });
+    subfuncCol.style.display='flex';
+    subfuncHint.textContent='Sub-function gets 60% weight in the paid report; parent function remains 40% context.';
+    subfuncHint.style.display='block';
+  }
+}
+
+function onSubFuncSelect(){
+  var subKey=document.getElementById('p-subfunc').value;
+  var subfuncSig=document.getElementById('subfunc-sig');
+  var subfuncHint=document.getElementById('subfunc-hint');
+  if(!subKey||!SUBROLES[subKey]){subfuncSig.style.display='none';return;}
+  var sr=SUBROLES[subKey];
+  subfuncSig.textContent=sr.sigTxt;
+  subfuncSig.style.color=sr.sigClr;
+  subfuncSig.style.background=sr.sigBg;
+  subfuncSig.style.display='block';
+  subfuncHint.textContent='This sub-function will shape market signal, risk analysis, strengths, actions, and upsell recommendation.';
+  subfuncHint.style.display='block';
+}
+
+// ============================================================
+// PROGRESS
+// ============================================================
+function updateProg(){
+  var n=0;
+  QS.forEach(function(q){if(document.querySelector('input[name="'+q.id+'"]:checked'))n++;});
+  var p=Math.round((n/25)*100);
+  document.getElementById('prog-fill').style.width=p+'%';
+  document.getElementById('prog-txt').textContent=n+' of 25 answered';
+  document.getElementById('prog-pct').textContent=p+'%';
+}
+
+// ============================================================
+// SCORING
+// ============================================================
+function getAnswers(){
+  var a={},ok=true;
+  QS.forEach(function(q){
+    var sel=document.querySelector('input[name="'+q.id+'"]:checked');
+    if(sel) a[q.id]=parseInt(sel.value); else ok=false;
+  });
+  return ok?a:null;
+}
+function calcScore(ans){
+  var tot=0,ds={};
+  QS.forEach(function(q){
+    var raw=ans[q.id],eff=q.rv?(6-raw):raw;
+    tot+=eff;
+    if(!ds[q.s]) ds[q.s]={sum:0,max:0};
+    ds[q.s].sum+=eff; ds[q.s].max+=5;
+  });
+  return{tot:tot,ds:ds};
+}
+function riskCat(t){
+  if(t>=90) return{lbl:'Stable — Needs Positioning',cls:'b-ok'};
+  if(t>=70) return{lbl:'Moderate Hidden Risk',cls:'b-med'};
+  if(t>=50) return{lbl:'Significant Career Exposure',cls:'b-low'};
+  return{lbl:'High Instability Zone',cls:'b-high'};
+}
+function detectPat(a){
+  if(a.q5>=4&&(a.q10<=2||a.q11<=2||a.q12<=2||a.q14<=2))
+    return{name:'Technically Strong But Politically Weak',desc:'High capability, weak organisational survivability.'};
+  if(a.q2<=2&&a.q10<=2&&a.q11<=2)
+    return{name:'Manager Dependency Trap',desc:'Career survival tied to one manager. Organisationally fragile.'};
+  if(a.q7>=4&&a.q8<=2&&a.q9<=2)
+    return{name:'AI-Commodifiable Contributor',desc:'Task-based role with high automation vulnerability.'};
+  if((a.q4>=4||a.q5>=4)&&(a.q1<=2||a.q14<=2))
+    return{name:'Invisible High Performer',desc:'Strong capability, low organisational visibility.'};
+  if(a.q19<=2&&a.q20>=4&&a.q21>=4)
+    return{name:'Financially Trapped Professional',desc:'Financial pressure reducing strategic career agency.'};
+  return{name:'Mixed Exposure Profile',desc:'Multiple moderate risk signals operating simultaneously.'};
+}
+function detectSecondary(a){
+  var sigs=[];
+  if(a.q21>=4&&a.q22>=4) sigs.push('Burnout Overlay');
+  if(a.q16<=2&&a.q17<=2&&a.q18<=2) sigs.push('Optionality Collapse');
+  if(a.q1<=2&&a.q3<=2&&a.q24<=2) sigs.push('Strategic Invisibility');
+  if(a.q4<=2&&a.q5<=2) sigs.push('Market Atrophy');
+  if(a.q7>=4&&a.q9<=2) sigs.push('AI Blindspot');
+  if(a.q10<=2&&a.q11<=2&&a.q12<=2) sigs.push('Political Isolation');
+  return sigs;
+}
+function mkId(){
+  return 'CR-'+Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).slice(2,7).toUpperCase();
+}
+
+// ============================================================
+// SUBMIT
+// ============================================================
+function submitForm(){
+  var errEl=document.getElementById('ferr');
+  clearFieldErrors();
+  var name=document.getElementById('p-name').value.trim();
+  var email=document.getElementById('p-email').value.trim();
+  var roleKey=document.getElementById('p-role-key').value;
+  var subKey=document.getElementById('p-subfunc').value||'';
+  var emailOk=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+
+  if(!name){showFieldError('p-name','Please enter your name so the report can be addressed properly.');return;}
+  if(!email||!emailOk){showFieldError('p-email','Please enter a valid email address. The paid report is delivered to this address.');return;}
+  if(!roleKey){showFieldError('p-role-key','Please select your function. The diagnostic changes meaningfully by function and cannot be accurate without it.');return;}
+
+  // If sub-function selector is visible and nothing selected, require it
+  var subfuncCol=document.getElementById('subfunc-col');
+  if(subfuncCol.style.display!=='none'&&!subKey){
+    showFieldError('p-subfunc','Please select your specific sub-function. The report uses 60% sub-function and 40% parent-function intelligence.');
+    return;
+  }
+
+  var ans=getAnswers();
+  if(!ans){errEl.textContent='Please answer all 25 questions before submitting.';errEl.style.display='block';errEl.scrollIntoView({behavior:'smooth',block:'center'});return;}
+  errEl.style.display='none';
+
+  var roleKeyOpt=document.getElementById('p-role-key').options[document.getElementById('p-role-key').selectedIndex];
+  var roleLabel=roleKeyOpt?roleKeyOpt.text:'';
+  var subLabel='';
+  if(subKey&&SUBROLES[subKey]) subLabel=SUBROLES[subKey].label;
+
+  var p={
+    name:name, email:email,
+    roleKey:roleKey, roleLabel:roleLabel,
+    roleSubKey:subKey, roleSubLabel:subLabel,
+    role:subLabel||roleLabel,
+    industry:document.getElementById('p-industry').value.trim(),
+    exp:document.getElementById('p-exp').value,
+    age:document.getElementById('p-age').value,
+    fear:document.getElementById('p-fear').value.trim(),
+    hobby:document.getElementById('p-hobby').value.trim(),
+    submittedAt:new Date().toLocaleString('en-IN',{timeZone:'Asia/Kolkata'})
+  };
+
+  var sc=calcScore(ans);
+  var rc=riskCat(sc.tot);
+  var pat=detectPat(ans);
+  var sigs=detectSecondary(ans);
+
+  curResult={
+    submissionId:mkId(),
+    submittedAt:new Date().toISOString(),
+    profile:p, answers:ans,
+    total:sc.tot, dimScores:sc.ds,
+    riskCat:rc, pattern:pat,
+    secondarySignals:sigs
+  };
+
+  saveResult(curResult);
+  toSheets(curResult);
+  goPublic('thanks');
+  showPreview(curResult);
+}
+
+function clearFieldErrors(){
+  ['p-name','p-email','p-role-key','p-subfunc'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el)el.classList.remove('field-error');
+  });
+}
+function showFieldError(id,msg){
+  var errEl=document.getElementById('ferr');
+  var el=document.getElementById(id);
+  errEl.textContent=msg;
+  errEl.style.display='block';
+  if(el){
+    el.classList.add('field-error');
+    el.scrollIntoView({behavior:'smooth',block:'center'});
+    setTimeout(function(){el.focus();},250);
+  }
+}
+
+// ============================================================
+// STORAGE
+// ============================================================
+function saveResult(r){
+  var all=getAll();
+  var idx=-1;
+  for(var i=0;i<all.length;i++){if(all[i].submissionId===r.submissionId){idx=i;break;}}
+  if(idx>=0) all[idx]=r; else all.unshift(r);
+  try{localStorage.setItem(STORE_KEY,JSON.stringify(all));}catch(e){}
+}
+function getAll(){
+  try{return JSON.parse(localStorage.getItem(STORE_KEY)||'[]');}catch(e){return[];}
+}
+function toSheets(r){
+  if(!CFG.sheetsUrl||CFG.sheetsUrl==='YOUR_APPS_SCRIPT_URL') return;
+  fetch(CFG.sheetsUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(r)}).catch(function(){});
+}
+
+// ============================================================
+// FREE PREVIEW
+// ============================================================
+function showPreview(r){
+  var bar=document.getElementById('load-bar');
+  if(bar) setTimeout(function(){bar.style.width='100%';},80);
+  setTimeout(function(){
+    document.getElementById('prev-loading').style.display='none';
+    document.getElementById('prev-result').style.display='block';
+    buildPreview(r);
+  },2200);
+}
+
+function buildPreview(r){
+  var p=r.profile, a=r.answers, tot=r.total, rc=r.riskCat, pat=r.pattern;
+  var sigs=r.secondarySignals||[];
+  // Get most specific role data: sub-function first, then parent
+  var role=getRoleData(p.roleKey, p.roleSubKey);
+  var fn=p.name?p.name.split(' ')[0]:'';
+
+  document.getElementById('prev-header').textContent=(fn?fn+', your':'Your')+' Job Risk Result';
+  document.getElementById('prev-score').textContent=tot;
+  document.getElementById('prev-badge').innerHTML='<span class="badge '+rc.cls+'">'+rc.lbl+'</span>';
+
+  // Score sentence — uses sub-function label if available
+  var roleLabel=p.roleSubLabel||p.roleLabel||role.label;
+  var sigMap={cooling:'cooling market for this role',declining:'declining demand for this role category',strong:'strong market for this role',stable:'stable market',bifurcated:'bifurcated market for this role',softening:'softening market',splitting:'splitting market',stable_risk:'shifting market',shifting:'actively transitioning market',mixed:'mixed conditions',high_risk:'high-automation-risk market for this function',unknown:'current conditions'};
+  var sigLabel=sigMap[role.signal]||'current conditions';
+  var scoreSent='';
+  if(tot>=90) scoreSent='For a '+roleLabel+', this score indicates structural stability — but the market for this function is shifting, and stability without active positioning gradually weakens.';
+  else if(tot>=70) scoreSent='For a '+roleLabel+', a score of '+tot+'/125 indicates moderate hidden risk in a '+sigLabel+' — the kind that feels manageable until one trigger converts it.';
+  else if(tot>=50) scoreSent='For a '+roleLabel+', a score of '+tot+'/125 in a '+sigLabel+' places you in significant exposure — one structural change converts manageable risk into acute vulnerability.';
+  else scoreSent='For a '+roleLabel+', this score indicates high instability. In a '+sigLabel+', the combination of risks in your profile is recoverable — but requires deliberate action, not another quarter of waiting.';
+  document.getElementById('prev-score-sent').textContent=scoreSent;
+
+  // Pattern
+  document.getElementById('prev-pattern').textContent=pat.name;
+  var patDesc='';
+  if(pat.name==='Mixed Exposure Profile'){
+    patDesc='As a '+roleLabel+', your profile shows no single catastrophic failure point — but multiple moderate-risk signals operating simultaneously. '+role.market+' The shift from execution to strategy defines career safety in this function.';
+  } else {
+    patDesc='As a '+roleLabel+': '+pat.desc+' '+role.market;
+  }
+  document.getElementById('prev-pat-desc').textContent=patDesc;
+
+  // Uncomfortable truth — uses sub-function specific context
+  var fear=(p.fear||'').trim();
+  var hf=fear.length>10;
+  var truth='';
+  if(pat.name==='AI-Commodifiable Contributor'){
+    truth=role.aiCtx+(hf?' You wrote: "'+fear.substring(0,100)+(fear.length>100?'...':"'")+'. Your instinct is correct — and your scores confirm the mechanism behind it.'  :' '+role.protected);
+  } else if(pat.name==='Technically Strong But Politically Weak'){
+    truth=hf?'Your career is not at risk because you lack skill. As a '+roleLabel+', it is at risk because the investment that built your capability went almost entirely into the work itself and almost nothing into the relationships that determine who survives when decisions are made above your level. "'+fear.substring(0,80).replace(/[.。]+$/,'')+(fear.length>80?'..."':'."')+' That fear is structurally accurate.'
+      :'As a '+roleLabel+', you have invested in capability and almost nothing in the internal relationships that determine who survives restructuring. '+role.market;
+  } else if(pat.name==='Manager Dependency Trap'){
+    truth='Your career stability is not really yours — it belongs to one relationship. For a '+roleLabel+', this is particularly exposed because the dependency feels like safety right up until the moment it is removed. '+role.market;
+  } else if(pat.name==='Invisible High Performer'){
+    truth='As a '+roleLabel+', you are delivering work the organisation depends on while remaining invisible to decision-makers. '+role.protected+' The question your scores raise is whether you are currently in the protected work or the exposed work.';
+  } else if(pat.name==='Financially Trapped Professional'){
+    truth=hf?'The thing keeping you in a situation that is compounding your risk is not the obligations you named — "'+fear.substring(0,80)+(fear.length>80?'...' :'')+'" — it is the absence of a calculated, specific exit calculation, and the exhaustion that makes building one feel impossible before you have actually tested whether it is.'
+      :'The financial constraints are real — and they are also functioning as the reason not to build the alternative that would eventually change the equation. The trap works by making exit feel impossible before the arithmetic has been done.';
+  } else {
+    truth='As a '+roleLabel+', your profile has no catastrophic single risk — but multiple moderate risks operating simultaneously in a '+sigLabel+'. The danger is that none of them feels urgent enough to act on, which is exactly when compounding begins and exactly when the window to act from a position of strength is still open.';
+  }
+  document.getElementById('prev-truth').textContent=truth;
+
+  // Full report bullets
+  var riskCount=tot<50?4:3;
+  var sharpMap={
+    'Technically Strong But Politically Weak':"why your manager's departure resets your career narrative to near-zero with whoever replaces them",
+    'Manager Dependency Trap':'the exact trigger that converts your current stability into acute vulnerability — and how fast it moves',
+    'AI-Commodifiable Contributor':'specifically which parts of a '+roleLabel+' role are automatable now versus what remains protected in your context',
+    'Invisible High Performer':'why strong delivery is not translating into the organisational protection you are assuming it provides',
+    'Financially Trapped Professional':'why the financial constraint is typically growing not shrinking — and what that means for your decision-making window',
+    'Mixed Exposure Profile':'how the specific combination of moderate risks in your '+roleLabel+' profile compound over the next 12 months'
+  };
+  var sharp=sharpMap[pat.name]||'the mechanism most likely to convert your current position into acute vulnerability';
+
+  var bullets=[
+    'The '+riskCount+' specific risks your scores reveal — including '+sharp,
+    'What is genuinely working in your favour as a '+roleLabel+' (only what your scores actually support — no fabricated positives)',
+    'The full diagnosis: what is structurally happening in your career and why the surface explanation is incomplete',
+    'A sequenced 4-stage action plan: exactly what to do in Week 1, Week 3, Month 2, and Month 3 — specific to your function',
+    'Your 90-day outlook: what materially improves if you act, what compounds if you do not'
+  ];
+  if(sigs.length>0){
+    var sl=sigs.length===1?sigs[0]:sigs.slice(0,-1).join(', ')+' and '+sigs[sigs.length-1];
+    bullets.push('Analysis of '+sl+' — how '+(sigs.length>1?'they compound':'it compounds')+' your primary risk profile');
+  }
+  if(p.hobby&&p.hobby.length>3){
+    bullets.push('A side income angle based on your stated interest — a grounded POV, not a startup pitch');
+  }
+
+  var bEl=document.getElementById('prev-bullets');
+  bEl.innerHTML=bullets.map(function(b){
+    return '<div><span class="arr">&#9658;</span><span class="txt">'+b+'</span></div>';
+  }).join('');
+
+  // CTA
+  var ctaEl=document.getElementById('cta-btn');
+  if(ctaEl){
+    var url=(CFG.paymentUrl&&CFG.paymentUrl!=='YOUR_RAZORPAY_LINK')
+      ?CFG.paymentUrl
+      :'mailto:'+CFG.email+'?subject='+encodeURIComponent('Full Report Request — '+p.name+' ('+r.submissionId+')')+'&body='+encodeURIComponent('Name: '+p.name+'\nEmail: '+p.email+'\nRole: '+(p.roleSubLabel||p.roleLabel)+'\nScore: '+tot+'/125\nPattern: '+pat.name+'\nID: '+r.submissionId+'\n\nPlease send my full CareerRadar Diagnostic Report.');
+    ctaEl.href=url;
+  }
+}
+
+// ============================================================
+// ADMIN — PEOPLE LIST
+// ============================================================
+function refreshPeople(){
+  var all=getAll();
+  var list=document.getElementById('pp-list');
+  var empty=document.getElementById('pp-empty');
+  document.getElementById('pp-count').textContent='Submissions ('+all.length+')';
+  if(!all.length){list.innerHTML='';list.appendChild(empty);empty.style.display='block';return;}
+  empty.style.display='none';
+  list.innerHTML='';
+  all.forEach(function(r){
+    var p=r.profile||{};
+    var rc=r.riskCat||{};
+    var init=(p.name||'?').split(' ').map(function(w){return w[0]||'';}).join('').toUpperCase().slice(0,2)||'?';
+    var row=document.createElement('div');
+    row.className='pr';
+    var displayRole=p.roleSubLabel||p.roleLabel||p.role||'';
+    row.innerHTML='<div class="pr-av">'+init+'</div>'
+      +'<div class="pr-info"><div class="pr-name">'+(p.name||'-')+'</div>'
+      +'<div class="pr-meta">'+displayRole+(p.industry?' — '+p.industry:'')+(p.submittedAt?' — '+p.submittedAt:'')+'</div></div>'
+      +'<div class="pr-score"><div class="sc">'+(r.total||'-')+'</div><div class="sc-sub">/ 125</div>'
+      +'<div style="margin-top:2px"><span class="badge '+(rc.cls||'b-ok')+'" style="font-size:10px">'+(rc.lbl||'')+'</span></div></div>';
+    row.onclick=(function(result,rowEl){
+      return function(){
+        document.querySelectorAll('.pr').forEach(function(x){x.classList.remove('active');});
+        rowEl.classList.add('active');
+        curResult=result;
+        renderAdmin(result);
+        document.getElementById('person-result').style.display='block';
+        document.getElementById('result-for').textContent='Showing result for '+(result.profile.name||'-');
+        document.getElementById('person-result').scrollIntoView({behavior:'smooth',block:'start'});
+      };
+    })(r,row);
+    list.appendChild(row);
+  });
+}
+
+// ============================================================
+// ADMIN — RENDER RESULT
+// ============================================================
+function renderAdmin(r){
+  var rc=r.riskCat||{}, pat=r.pattern||{};
+  document.getElementById('adm-title').textContent=(r.profile.name||'-')+' — Result';
+  document.getElementById('adm-sub').textContent='ID: '+(r.submissionId||'-')+' — '+(r.profile.submittedAt||'');
+  document.getElementById('r-score').textContent=r.total;
+  document.getElementById('r-cat').textContent=rc.lbl||'-';
+  document.getElementById('r-badge').innerHTML='<span class="badge '+(rc.cls||'b-ok')+'">'+(rc.lbl||'')+'</span>';
+  document.getElementById('r-pat').textContent=pat.name||'-';
+  document.getElementById('r-patsub').textContent=pat.desc||'';
+
+  var db=document.getElementById('dbars'); db.innerHTML='';
+  SECS.forEach(function(sec){
+    var d=r.dimScores[sec]||{sum:0,max:SMAXES[sec]||15};
+    var pct=Math.round((d.sum/d.max)*100);
+    var el=document.createElement('div'); el.className='drow';
+    el.innerHTML='<div class="dnm">'+sec+'</div><div class="dbw"><div class="dbf'+(pct<50?' risk':'')+'" style="width:'+pct+'%"></div></div><div class="dsc">'+d.sum+'/'+d.max+'</div>';
+    db.appendChild(el);
+  });
+
+  var tb=document.getElementById('atbl'); tb.innerHTML='';
+  QS.forEach(function(q,i){
+    var raw=r.answers[q.id]||0;
+    var pc=q.rv?'spr'+raw:'sp'+raw;
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td>Q'+(i+1)+'</td><td>'+q.t+(q.rv?' <em style="font-size:9px;color:var(--ink4)">(rev)</em>':'')+'</td><td style="font-size:10px;color:var(--ink3)">'+q.s+'</td><td><span class="sp '+pc+'">'+raw+'</span></td>';
+    tb.appendChild(tr);
+  });
+
+  var p=r.profile;
+  var sigs=r.secondarySignals||[];
+  document.getElementById('prof-disp').innerHTML='<strong>Name:</strong> '+p.name+' &nbsp;|&nbsp; <strong>Email:</strong> '+p.email+'<br><strong>Role Category:</strong> '+(p.roleLabel||'-')+(p.roleSubLabel?' &nbsp;|&nbsp; <strong>Sub-function:</strong> '+p.roleSubLabel:'')+'<br><strong>Industry:</strong> '+(p.industry||'-')+' &nbsp;|&nbsp; <strong>Exp:</strong> '+(p.exp||'-')+' &nbsp;|&nbsp; <strong>Age:</strong> '+(p.age||'-')+'<br><strong>Fear:</strong> '+(p.fear||'-')+'<br><strong>Hobby:</strong> '+(p.hobby||'—')+'<br><strong>Secondary signals:</strong> '+(sigs.length?sigs.join(', '):'None');
+}
+
+function loadReveal(){
+  if(!curResult){alert('Select a person from the list first.');return;}
+  goAdmin('reveal');
+}
+function importJson(){
+  var raw=document.getElementById('import-area').value.trim();
+  var errEl=document.getElementById('import-err');
+  errEl.style.display='none';
+  var r;
+  try{r=JSON.parse(raw);if(!r.total||!r.pattern||!r.dimScores)throw 0;}
+  catch(e){errEl.style.display='inline';return;}
+  saveResult(r);
+  curResult=r;
+  refreshPeople();
+  renderAdmin(r);
+  document.getElementById('person-result').style.display='block';
+  document.getElementById('result-for').textContent='Showing result for '+(r.profile.name||'-');
+  document.getElementById('import-area').value='';
+  document.getElementById('person-result').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ============================================================
+// PAID REPORT GENERATION (Local premium report)
+// ============================================================
+function genSnapAI(){
+  var raw=document.getElementById('paste-in').value.trim();
+  var errEl=document.getElementById('perr'); errEl.style.display='none';
+  var r;
+  try{r=JSON.parse(raw);if(!r.total||!r.pattern||!r.dimScores)throw 0;}
+  catch(e){errEl.style.display='block';return;}
+  curResult=r;
+  document.getElementById('gen-loading').classList.add('on');
+  document.getElementById('snap-doc').classList.remove('on');
+  document.getElementById('snap-btns').style.display='none';
+  var statuses=['Analysing dimension scores and sub-function context','Layering 60% sub-function and 40% function intelligence','Building the 4-week action sequence','Calibrating upsell and side-income sections'];
+  var si=0;
+  var statusInterval=setInterval(function(){
+    si=(si+1)%statuses.length;
+    document.getElementById('gen-status').textContent=statuses[si];
+  },700);
+  setTimeout(function(){
+    clearInterval(statusInterval);
+    document.getElementById('gen-loading').classList.remove('on');
+    buildSnapFromAI(r,buildPaidReport(r));
+  },900);
+}
+
+function dimPct(r,sec){
+  var d=r.dimScores[sec]||{sum:0,max:SMAXES[sec]||15};
+  return d.max?Math.round((d.sum/d.max)*100):0;
+}
+function rankedDims(r,dir){
+  return SECS.map(function(sec){var d=r.dimScores[sec]||{sum:0,max:SMAXES[sec]||15};return{sec:sec,sum:d.sum,max:d.max,pct:dimPct(r,sec)};})
+    .sort(function(a,b){return dir==='high'?b.pct-a.pct:a.pct-b.pct;});
+}
+function roleSignalPhrase(sig){
+  return {high_risk:'a high-automation-pressure sub-function',declining:'a declining demand pocket',cooling:'a cooling market pocket',softening:'a softening market pocket',stable_risk:'a stable-looking but shifting role pocket',stable:'a comparatively stable role pocket',strong:'a strong role pocket',splitting:'a market that is splitting between commodity and strategic work',bifurcated:'a bifurcated market',mixed:'mixed market conditions'}[sig]||'current market conditions';
+}
+function strongestSupported(r,role,high){
+  var out=[];
+  var a=r.answers||{};
+  if(dimPct(r,'AI Exposure')>=60&&role.signal!=='high_risk')out.push('Your AI exposure score shows that some parts of the role still require judgment, ambiguity handling, or trust. In '+role.label+', that matters only if you deliberately move toward: '+role.protected);
+  if(dimPct(r,'Market Survivability')>=60)out.push('Your market survivability score is usable, not theoretical. It means the external market has something to recognise if you package your work around '+role.market);
+  if(dimPct(r,'Organisational Visibility')>=60)out.push('Your visibility score gives you a base to work from internally. That is useful because this role family is safer when decision-makers can connect your work to business outcomes.');
+  if(dimPct(r,'Strategic Relevance')>=60)out.push('Strategic relevance is a real advantage in your profile. Your task is to make the strategic part of the role more visible than the execution layer.');
+  if(dimPct(r,'Financial Resilience')>=60)out.push('Financial resilience gives you time to act from strategy rather than panic. That is a meaningful advantage in a career-risk situation.');
+  if(role.signal==='strong')out.push('The sub-function market itself is working in your favour: '+role.market);
+  if(role.signal==='stable'||role.signal==='stable_risk')out.push('Your sub-function has a defensible core: '+role.protected);
+  if(!out.length)out.push('The main thing working in your favour is not a perfect score; it is that the exposed and protected parts of your role are now visible. That means your next moves can be targeted instead of emotional.');
+  return out.slice(0,4);
+}
+function buildRiskList(r,role,low){
+  var p=r.profile,a=r.answers,sigs=r.secondarySignals||[],roleLabel=p.roleSubLabel||p.roleLabel||role.label;
+  var risks=[];
+  risks.push({name:'Sub-function compression risk',detail:'In '+roleLabel+', the exposed layer is clear: '+role.aiCtx+' If your daily work is still closer to that exposed layer than to '+role.protected+', the market will judge you as execution capacity rather than protected judgment.'});
+  if(low[0])risks.push({name:low[0].sec+' is doing the most structural damage',detail:'This dimension is at '+low[0].sum+'/'+low[0].max+'. In practical terms, this is the part of the profile most likely to convert anxiety into an actual career event because it weakens your ability to absorb a reorg, manager change, or market shift.'});
+  if(a.q2<=2||a.q10<=2||a.q11<=2)risks.push({name:'Single-room decision risk',detail:'Your scores suggest too much of your career narrative depends on too few people. The trigger is not bad performance; it is a decision made in a room where your role value is not represented clearly enough.'});
+  if(sigs.indexOf('AI Blindspot')>=0||a.q7>=4)risks.push({name:'AI blindspot or AI delay risk',detail:'Your answers show automation pressure without enough evidence that you have already repositioned the role around AI-assisted leverage. The danger is not that AI replaces the entire job; it is that it compresses the part of the job you are currently known for.'});
+  if(sigs.indexOf('Optionality Collapse')>=0)risks.push({name:'Optionality collapse',detail:'Your career alternatives are not yet alive enough to reduce fear. This means even a moderate workplace trigger can feel larger than it is because the exit path has not been built before the pressure arrives.'});
+  if(sigs.indexOf('Burnout Overlay')>=0)risks.push({name:'Burnout overlay',detail:'The emotional load is no longer background noise. When burnout combines with weak optionality or low visibility, the person often stops making strategic moves exactly when those moves matter most.'});
+  return risks.slice(0,5);
+}
+function buildActionPlan(r,role,low){
+  var p=r.profile,roleLabel=p.roleSubLabel||p.roleLabel||role.label;
+  var base=role.acts||[];
+  var first=base[0]||'Write a one-page summary of where your current role is exposed and where it is protected.';
+  var second=base[1]||'Create one visible proof of business impact from your last 90 days of work.';
+  var third=base[2]||'Update your role story around outcomes and judgment, not task execution.';
+  var weak=low[0]?low[0].sec:'your weakest dimension';
+  return {
+    w1_title:'Stabilise The Exposed Layer',
+    w1_action:first+'. Convert it into a visible artifact this week: a one-page note, dashboard commentary, design memo, risk map, or control note that can be shown to a manager or stakeholder.',
+    w1_why:'This comes first because the report is built on the free-preview truth: your risk is not abstract anxiety; it sits in the exposed layer of '+roleLabel+'.',
+    w3_title:'Create A Protected-Skill Signal',
+    w3_action:second+' Make the output concrete enough that it can be reused in a review, resume, LinkedIn profile, or stakeholder conversation.',
+    w3_why:'The paid report builds on the free preview by turning the diagnosis into evidence. Evidence reduces both internal and external ambiguity.',
+    m2_title:'Move Visibility Above The Task Layer',
+    m2_action:'Pick one senior stakeholder, business partner, or cross-functional owner and share a 3-bullet update: problem, business impact, and your decision/judgment. Do not report activity. Report value.',
+    m2_compound:'This directly attacks '+weak+' by making your contribution legible before a pressure event forces others to define it for you.',
+    m3_title:'Lock A 90-Day Positioning Asset',
+    m3_action:third+' Build one durable asset: a rewritten LinkedIn headline/about section, a portfolio case note, a business-impact summary, a certification/proof artifact, or a stakeholder-backed impact narrative.',
+    m3_change:'By the end of Month 3, the protected part of your role should be visible both inside the organisation and outside it.'
+  };
+}
+function buildSideIncome(r,role){
+  var h=(r.profile.hobby||'').trim(),roleLabel=r.profile.roleSubLabel||r.profile.roleLabel||role.label;
+  if(h.length>3){
+    return 'Your stated interest in '+h+' is not something to romanticise into a full business immediately. The practical angle is to test one small paid proof: a weekend workshop, a local service, a digital guide, or a niche advisory/content format connected to people who already value that interest. A realistic first target is Rs.3,000-Rs.12,000 per month from one repeatable offer, not a dramatic income replacement. Treat it as optional runway-building, not escape fantasy.';
+  }
+  return 'Because you did not name a strong outside interest, the more realistic side-income angle is to package your professional judgment from '+roleLabel+'. This could be resume review, interview preparation, spreadsheet/dashboard help, compliance checklist support, content editing, or a short workshop depending on your function. A realistic first target is Rs.5,000-Rs.15,000 per month from a narrow service, tested quietly before investing serious time.';
+}
+function buildPaidReport(r){
+  var p=r.profile,a=r.answers||{},role=getRoleData(p.roleKey,p.roleSubKey);
+  var roleLabel=p.roleSubLabel||p.roleLabel||role.label;
+  var low=rankedDims(r,'low'),high=rankedDims(r,'high'),sigs=r.secondarySignals||[];
+  var signal=roleSignalPhrase(role.signal);
+  var fear=p.fear&&p.fear.length>8?'"'+p.fear.replace(/[.。]+$/,'')+'"':'the anxiety you named in the form';
+  var action=buildActionPlan(r,role,low);
+  var scoreLine=r.total>=90?'The score is stable, but not self-maintaining.':r.total>=70?'The score shows moderate hidden risk: manageable today, exposed under a trigger.':r.total>=50?'The score shows significant exposure. You are not in panic territory, but the profile is weaker than it may feel day to day.':'The score is in the high-instability zone. The priority is stabilisation before ambition.';
+  var contradiction=(a.q5>=4&&dimPct(r,'Internal Political Capital')<50)?'There is a specific contradiction in your profile: market skill exists, but internal protection does not. ':'';
+  return {
+    score_interpretation:scoreLine+' For '+roleLabel+' in '+(p.industry||'your sector')+', this sits inside '+signal+', so the useful question is not "am I good?" but "am I known for the protected part of this role?" This diagnostic uses a people-and-organisation design lens, not generic prompt output, so it reads your role the way an organisation is likely to evaluate cost, visibility, replaceability, and trust.',
+    dimension_analysis:'Your weakest dimensions are '+low[0].sec+' ('+low[0].sum+'/'+low[0].max+'), '+low[1].sec+' ('+low[1].sum+'/'+low[1].max+'), and '+low[2].sec+' ('+low[2].sum+'/'+low[2].max+'). The strongest dimensions are '+high[0].sec+' and '+high[1].sec+'. The combination matters because a strength only protects you when it is visible, marketable, and attached to business value; otherwise it remains private effort.',
+    pattern_para1:'The free preview named your dominant pattern as '+r.pattern.name+'. In the paid report, the sharper reading is this: '+role.market+' That means the same pattern behaves differently for '+roleLabel+' than it would for a generic corporate employee.',
+    pattern_para2:'If nothing changes, the pattern does not usually collapse overnight. It quietly narrows your choices: fewer advocates, weaker market packaging, more emotional load, and slower movement out of the exposed layer of the role.',
+    risks:buildRiskList(r,role,low),
+    strengths:strongestSupported(r,role,high),
+    diagnosis:'The fear you named is not random: '+fear+'. '+contradiction+'For '+roleLabel+', the root issue is the gap between the work that is getting compressed and the work that remains protected. Your answers show '+r.pattern.name+(sigs.length?' layered with '+sigs.join(', '):'')+'. That means the problem is not just job-market anxiety; it is a positioning and optionality problem sitting on top of a specific function-market reality. The immediate job is to move evidence, visibility, and skill story toward the protected side of the role before an external trigger forces the issue.',
+    w1_title:action.w1_title,w1_action:action.w1_action,w1_why:action.w1_why,
+    w3_title:action.w3_title,w3_action:action.w3_action,w3_why:action.w3_why,
+    m2_title:action.m2_title,m2_action:action.m2_action,m2_compound:action.m2_compound,
+    m3_title:action.m3_title,m3_action:action.m3_action,m3_change:action.m3_change,
+    outlook_act:'If you act, the next 90 days can create visible proof that you belong on the protected side of '+roleLabel+'. It will not remove all market risk, but it gives you leverage, language, and options.',
+    outlook_dont:'If you do not act, the exposed layer of the role keeps defining you. The deterioration mechanism is mechanical: less visibility, weaker optionality, and more dependence on whoever currently understands your work.',
+    outlook_key:'Your career anxiety reduces when your role story moves from task execution to protected judgment with evidence.',
+    side_income_pov:buildSideIncome(r,role)
+  };
+}
+
+// ============================================================
+// RENDER AI REPORT INTO SNAP-DOC
+// ============================================================
+function buildSnapFromAI(r,report){
+  var p=r.profile;
+  var role=getRoleData(p.roleKey,p.roleSubKey);
+  var a=r.answers;
+  var sigs=r.secondarySignals||[];
+  var roleLabel=p.roleSubLabel||p.roleLabel||role.label;
+
+  // Header
+  document.getElementById('sn-name').textContent=(p.name||'Professional')+' — CareerRadar Report';
+  document.getElementById('sn-meta').textContent=[roleLabel,p.industry,p.submittedAt].filter(Boolean).join(' — ');
+  document.getElementById('sn-score').textContent=r.total;
+  document.getElementById('sn-rl').textContent=r.riskCat.lbl;
+  document.getElementById('sn-badge2').innerHTML='<span class="badge '+r.riskCat.cls+'">'+r.riskCat.lbl+'</span>';
+  document.getElementById('sn-pat').textContent=r.pattern.name+(sigs.length?' + '+sigs.join(', '):'');
+
+  // Score interpretation
+  document.getElementById('sn-score-interp').textContent=report.score_interpretation||'-';
+
+  // Dimension bars
+  var sdb=document.getElementById('sn-dims'); sdb.innerHTML='';
+  SECS.forEach(function(sec){
+    var d=r.dimScores[sec]||{sum:0,max:SMAXES[sec]||15};
+    var pct=Math.round((d.sum/d.max)*100);
+    var el=document.createElement('div'); el.className='sdr';
+    el.innerHTML='<div class="sdn">'+sec+'</div><div class="sdbw"><div class="sdbf'+(pct<50?' w':'')+'" style="width:'+pct+'%"></div></div><div class="sds">'+d.sum+'/'+d.max+'</div>';
+    sdb.appendChild(el);
+  });
+  document.getElementById('sn-dim-analysis').textContent=report.dimension_analysis||'-';
+
+  // Pattern
+  document.getElementById('sn-pat-para1').textContent=report.pattern_para1||'-';
+  document.getElementById('sn-pat-para2').textContent=report.pattern_para2||'-';
+
+  // Risks (detailed, named)
+  var risksEl=document.getElementById('sn-risks-detail');
+  risksEl.innerHTML='';
+  if(report.risks&&report.risks.length){
+    report.risks.forEach(function(risk){
+      var div=document.createElement('div');
+      div.style.cssText='background:var(--rb);border-radius:8px;padding:.9rem 1.1rem;';
+      div.innerHTML='<div style="font-size:12px;font-weight:700;color:var(--r);margin-bottom:.35rem">! '+esc(risk.name)+'</div><div style="font-size:13px;color:var(--ink);line-height:1.55">'+esc(risk.detail)+'</div>';
+      risksEl.appendChild(div);
+    });
+  }
+
+  // Strengths
+  var strEl=document.getElementById('sn-str');
+  strEl.innerHTML='';
+  var strs=report.strengths||[];
+  if(!strs.length) strs=['Execution capability and domain familiarity within the current organisation'];
+  strs.forEach(function(s){
+    var li=document.createElement('li'); li.textContent=s; strEl.appendChild(li);
+  });
+
+  // Diagnosis
+  document.getElementById('sn-obs').textContent=report.diagnosis||'-';
+
+  // Action plan stages
+  document.getElementById('sn-w1-title').textContent=report.w1_title||'The Stabiliser';
+  document.getElementById('sn-w1-action').textContent=report.w1_action||'-';
+  document.getElementById('sn-w1-why').textContent='Why first: '+(report.w1_why||'-');
+
+  document.getElementById('sn-w3-title').textContent=report.w3_title||'The Foundation Move';
+  document.getElementById('sn-w3-action').textContent=report.w3_action||'-';
+  document.getElementById('sn-w3-why').textContent='Why this matters: '+(report.w3_why||'-');
+
+  document.getElementById('sn-m2-title').textContent=report.m2_title||'The Visibility Shift';
+  document.getElementById('sn-m2-action').textContent=report.m2_action||'-';
+  document.getElementById('sn-m2-why').textContent='The compounding effect: '+(report.m2_compound||'-');
+
+  document.getElementById('sn-m3-title').textContent=report.m3_title||'The Position Lock';
+  document.getElementById('sn-m3-action').textContent=report.m3_action||'-';
+  document.getElementById('sn-m3-why').textContent='What changes: '+(report.m3_change||'-');
+
+  // 90-day outlook
+  document.getElementById('sn-otlk-act').textContent=report.outlook_act||'-';
+  document.getElementById('sn-otlk-dont').textContent=report.outlook_dont||'-';
+  document.getElementById('sn-otlk-key').textContent=report.outlook_key||'-';
+
+  // Side income POV
+  var sideSec=document.getElementById('sn-side-sec');
+  var sideText=report.side_income_pov||'';
+  if(sideText&&sideText.length>20){
+    document.getElementById('sn-side-income').textContent=sideText;
+    sideSec.style.display='block';
+  } else {
+    sideSec.style.display='none';
+  }
+
+  // Upsell — complete paid-report section, recommended by risk profile
+  var upsellSec=document.getElementById('sn-upsell-sec');
+  var tier=r.total<50?1:r.total<70?2:r.total<90?3:4;
+  var hasAIBlindspot=sigs.indexOf('AI Blindspot')>=0;
+  var introText='This report is designed to be complete on its own. The options below are only for someone who wants human support, sharper accountability, or a second layer of review after reading the diagnostic.';
+  if(tier===1) introText+=' Your profile is in the highest urgency band, so the recovery roadmap is the most relevant next step if you want hands-on help.';
+  else if(tier===2) introText+=' Your profile shows multiple interacting risks, so a focused risk audit is the most relevant next step if you want to move faster.';
+  else if(hasAIBlindspot) introText+=' Because AI Blindspot appears in your profile, the AI Role Audit is the most relevant optional add-on.';
+  else introText+=' If you are comfortable acting independently, do the 30-day sequence first and revisit support only after Week 4.';
+  document.getElementById('sn-upsell-intro').textContent=introText;
+  var optsEl=document.getElementById('sn-upsell-opts');
+  optsEl.innerHTML='';
+  optsEl.innerHTML+='<div class="uopt"><div class="uopt-name">'+(hasAIBlindspot?'Recommended: ':'')+'AI Role Audit</div><div class="uopt-desc">45-minute review of your automation exposure, AI tool leverage, and 60-day repositioning plan. Best for AI Blindspot, AI-Commodifiable Work, Java/backend, QA, content, finance reporting, or operations execution profiles.</div><div class="uopt-price">&#8377;999</div></div>';
+  optsEl.innerHTML+='<div class="uopt"><div class="uopt-name">'+(tier===2?'Recommended: ':'')+'Career Risk Audit</div><div class="uopt-desc">90-minute session turning this report into a specific intervention sequence for your organisation, manager situation, market readiness, and timeline. Best for Tier 2 profiles with several risks interacting.</div><div class="uopt-price">&#8377;1,999</div></div>';
+  optsEl.innerHTML+='<div class="uopt"><div class="uopt-name">'+(tier===1?'Recommended: ':'')+'Career Recovery Roadmap</div><div class="uopt-desc">Three sessions over 30 days covering runway calculation, exit mapping, skill/story repositioning, and week-by-week execution. Best for high-instability, financial trap, burnout overlay, or optionality collapse profiles.</div><div class="uopt-price">&#8377;3,999</div></div>';
+  upsellSec.style.display='block';
+
+  // Footer
+  document.getElementById('sn-ft-nm').textContent=(p.name||'')+(p.role?' — '+p.role:'');
+  document.getElementById('sn-ft-dt').textContent='Generated: '+new Date().toLocaleDateString('en-IN');
+
+  // Show the document
+  document.getElementById('snap-doc').classList.add('on');
+  document.getElementById('snap-btns').style.display='flex';
+  document.getElementById('snap-doc').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// Escape HTML for safe DOM injection
+function esc(str){
+  return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ============================================================
+// EXPORT / DOWNLOAD
+// ============================================================
+function dlBlob(blob,name){
+  var u=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=u; a.download=name; document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(u);
+}
+function safe(v){return String(v||'result').trim().replace(/[^a-z0-9]+/gi,'-').replace(/^-+|-+$/g,'').toLowerCase()||'result';}
+function csvCell(v){return '"'+String(v==null?'':v).replace(/"/g,'""')+'"';}
+function toCsv(r){
+  var hdr=['ID','Submitted','Name','Email','RoleCategory','RoleSubFunction','Industry','Exp','Age','Fear','Hobby','Score','Risk','Pattern','SecondarySignals'].concat(QS.map(function(q,i){return'Q'+(i+1);})).concat(['Full JSON']);
+  var sigs=(r.secondarySignals||[]).join('|');
+  var row=[r.submissionId,r.profile.submittedAt,r.profile.name,r.profile.email,r.profile.roleLabel||'',r.profile.roleSubLabel||'',r.profile.industry,r.profile.exp,r.profile.age,r.profile.fear,r.profile.hobby,r.total,r.riskCat.lbl,r.pattern.name,sigs].concat(QS.map(function(q){return r.answers[q.id];})).concat([JSON.stringify(r)]);
+  return hdr.map(csvCell).join(',')+'\n'+row.map(csvCell).join(',');
+}
+function copyResult(){
+  if(!curResult) return;
+  cpText(JSON.stringify(curResult,null,2));
+  var b=document.getElementById('copy-btn'); b.textContent='Copied!';
+  setTimeout(function(){b.textContent='Copy JSON';},1800);
+}
+function dlJson(){if(!curResult)return;dlBlob(new Blob([JSON.stringify(curResult,null,2)],{type:'application/json'}),safe(curResult.profile.name)+'-cr.json');}
+function dlCsv(){if(!curResult)return;dlBlob(new Blob([toCsv(curResult)],{type:'text/csv'}),safe(curResult.profile.name)+'-cr.csv');}
+function exportCsv(){
+  var all=getAll();if(!all.length){alert('No results yet.');return;}
+  var rows=all.map(function(r){return toCsv(r).split('\n')[1];});
+  dlBlob(new Blob([[toCsv(all[0]).split('\n')[0]].concat(rows).join('\n')],{type:'text/csv'}),'careerradar-all.csv');
+}
+function dlPdf(){
+  if(!document.getElementById('snap-doc').classList.contains('on')){alert('Generate the report first.');return;}
+  document.body.classList.add('print-snap');
+  window.print();
+  document.body.classList.remove('print-snap');
+}
+function dlWord(){
+  var doc=document.getElementById('snap-doc');
+  if(!doc.classList.contains('on')){alert('Generate the report first.');return;}
+  var nm=document.getElementById('sn-ft-nm').textContent||'report';
+  var wordHtml='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8"><title>CareerRadar Report</title><style>body{font-family:Calibri,Arial,sans-serif;font-size:11pt;line-height:1.6;margin:2cm;color:#1a1a18}h1{font-size:18pt;color:#1a3a2a;margin-bottom:6pt}h2{font-size:13pt;color:#1a3a2a;margin-top:14pt;margin-bottom:4pt}h3{font-size:11pt;color:#1a3a2a;margin-top:10pt;margin-bottom:3pt}p{margin-bottom:8pt}.sc{font-size:28pt;color:#1a3a2a;font-weight:bold}.risk{color:#8b2020}.good{color:#1a4a1a}.sec{border-top:1pt solid #e4e3dc;margin-top:12pt;padding-top:8pt}.caveat{font-size:8pt;color:#8a8a85;margin-top:20pt;border-top:1pt solid #e4e3dc;padding-top:8pt}</style></head><body>';
+  wordHtml+='<h1>CareerRadar&#8482; Job Risk Diagnostic Report</h1>';
+  wordHtml+='<p><strong>'+document.getElementById('sn-name').textContent+'</strong></p>';
+  wordHtml+='<p>'+document.getElementById('sn-meta').textContent+'</p>';
+  wordHtml+='<div class="sec"><p class="sc">'+document.getElementById('sn-score').textContent+'/125</p>';
+  wordHtml+='<p><strong>'+document.getElementById('sn-rl').textContent+'</strong></p>';
+  wordHtml+='<p>Pattern: <strong>'+document.getElementById('sn-pat').textContent+'</strong></p>';
+  wordHtml+='<p>'+document.getElementById('sn-score-interp').textContent+'</p></div>';
+  wordHtml+='<div class="sec"><h2>The Diagnosis</h2><p style="font-style:italic">'+document.getElementById('sn-obs').textContent+'</p></div>';
+  var risks=document.getElementById('sn-risks-detail').querySelectorAll('div[style]');
+  if(risks.length){
+    wordHtml+='<div class="sec"><h2>The Real Risks</h2>';
+    risks.forEach(function(el){wordHtml+='<p class="risk"><strong>'+el.querySelector('div').textContent+'</strong><br>'+el.querySelectorAll('div')[1].textContent+'</p>';});
+    wordHtml+='</div>';
+  }
+  var strs=document.getElementById('sn-str').querySelectorAll('li');
+  if(strs.length){wordHtml+='<div class="sec"><h2>What Is Actually Working In Your Favour</h2><ul>';strs.forEach(function(li){wordHtml+='<li class="good">'+li.textContent+'</li>';});wordHtml+='</ul></div>';}
+  wordHtml+='<div class="sec"><h2>Your Action Plan</h2>';
+  ['w1','w3','m2','m3'].forEach(function(k,i){
+    var tags=['Week 1–2','Week 3–4','Month 2','Month 3'];
+    wordHtml+='<h3>'+tags[i]+': '+document.getElementById('sn-'+k+'-title').textContent+'</h3>';
+    wordHtml+='<p>'+document.getElementById('sn-'+k+(k==='m2'?'-action':'-action')).textContent+'</p>';
+    wordHtml+='<p style="font-size:10pt;color:#8a8a85">'+document.getElementById('sn-'+k+(k==='w1'?'-why':k==='w3'?'-why':k==='m2'?'-why':'-why')).textContent+'</p>';
+  });
+  wordHtml+='</div>';
+  wordHtml+='<div class="sec"><h2>90-Day Outlook</h2><p class="good"><strong>If you act:</strong> '+document.getElementById('sn-otlk-act').textContent+'</p><p class="risk"><strong>If you don\'t:</strong> '+document.getElementById('sn-otlk-dont').textContent+'</p><p style="font-style:italic;border:1pt solid #e4e3dc;padding:6pt">'+document.getElementById('sn-otlk-key').textContent+'</p></div>';
+  var sideEl=document.getElementById('sn-side-sec');
+  if(sideEl.style.display!=='none'){wordHtml+='<div class="sec"><h2>A Note on Side Income</h2><p>'+document.getElementById('sn-side-income').textContent+'</p></div>';}
+  wordHtml+='<div class="caveat"><p>Diagnostic disclaimer: This report is generated from a self-assessment and is for informational, educational, and reflective use only. It is not legal, financial, medical, psychological, business, employment, investment, or professional advice. CareerRadar and its operators are not responsible for any loss, distress, employment outcome, financial outcome, business outcome, relationship issue, or other consequence arising from decisions made after reading this report. Speak with a qualified professional before acting on major career, legal, financial, health, or employment matters.</p></div>';
+  wordHtml+='</body></html>';
+  dlBlob(new Blob([wordHtml],{type:'application/msword'}),safe(nm)+'-careerradar.doc');
+}
+function copySnap(){cpText((document.getElementById('snap-doc').innerText||'').trim());}
+function dlSnap(){
+  var nm=document.getElementById('sn-ft-nm').textContent||'report';
+  dlBlob(new Blob([(document.getElementById('snap-doc').innerText||'').trim()],{type:'text/plain'}),safe(nm)+'-cr.txt');
+}
+function dlPrevPdf(){document.body.classList.add('print-prev');window.print();document.body.classList.remove('print-prev');}
+function toggleEmailBox(){
+  var b=document.getElementById('email-box');
+  b.style.display=b.style.display==='none'?'block':'none';
+}
+function sendEmail(){
+  var doc=document.getElementById('snap-doc');
+  if(!doc.classList.contains('on')){alert('Generate the report first.');return;}
+  var ce=document.getElementById('client-email').value.trim();
+  if(!ce||!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(ce)){alert('Enter a valid client email address.');return;}
+  var nm=document.getElementById('sn-name').textContent||'Professional';
+  var body=encodeURIComponent('Hi,\n\nPlease find your CareerRadar Job Risk Diagnostic Report below.\n\n---\n\n'+(doc.innerText||'').trim()+'\n\n---\n\nCareerRadar\u2122 \u2014 India\'s Mid-Career Job Risk Diagnostic\nGenerated: '+new Date().toLocaleDateString('en-IN'));
+  window.location.href='mailto:'+ce+'?subject='+encodeURIComponent('Your CareerRadar Diagnostic Report \u2014 '+nm)+'&body='+body;
+}
+function cpText(txt){
+  if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(txt).catch(function(){fbCopy(txt);});}
+  else fbCopy(txt);
+}
+function fbCopy(txt){
+  var ta=document.createElement('textarea');ta.value=txt;
+  ta.style.position='fixed';ta.style.left='-9999px';
+  document.body.appendChild(ta);ta.select();
+  try{document.execCommand('copy');}catch(e){}
+  ta.remove();
+}
+function importJsonFile(ev){
+  var f=ev.target.files&&ev.target.files[0];if(!f)return;
+  var reader=new FileReader();
+  reader.onload=function(){document.getElementById('paste-in').value=reader.result;genSnapAI();};
+  reader.readAsText(f);ev.target.value='';
+}
+</script>
+</body>
+</html>
